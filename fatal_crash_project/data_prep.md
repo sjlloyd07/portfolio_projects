@@ -2,7 +2,7 @@
 ***
 # 📋 Preparation
 
-After the NHTSA `accident.csv` file was downloaded to local storage, Microsoft Excel was utilized to view the `accident.csv` data and isolate the column headers in order to retain them as column names in the newly created raw data table. At this point, table `nhtsa_accident_2019_raw` [was created](https://github.com/sjlloyd07/fatal_crash_project/blob/971e641e932c051cd2ce5cd63d7edf87706d1531/fatal_crash_project_queries.sql#L6). A newly created local PostgreSQL database served to house this and all future project data tables.
+After the NHTSA `accident.csv` file was downloaded to local storage, Microsoft Excel was utilized to view the `accident.csv` data and isolate the column headers in order to retain them as column names in the newly created raw data table. At this point, table `nhtsa_accident_2019_raw` [was created](/fatal_crash_project/queries.sql#L6). A newly created local PostgreSQL database served to house this and all future project data tables.
 
 * The raw data was copied to the `nhtsa_accident_2019_raw` table from the `accident.csv` file using the `psql` client copy command: `\copy`. 
 
@@ -14,13 +14,15 @@ After the NHTSA `accident.csv` file was downloaded to local storage, Microsoft E
 * Table `nhtsa_accident_2019_raw` contains 91 columns.  
 
   <details>
-    <summary><strong>View Data Dictionary</strong></summary>  
-  <br>
-    <code>SELECT column_name, data_type, character_maximum_length
-  FROM information_schema.columns
-  WHERE table_name = 'nhtsa_accident_2019_raw'</code>
-  <br><br>
-    
+    <summary><strong>View Data Dictionary</strong></summary><br>
+	
+	```sql
+	SELECT column_name, data_type, character_maximum_length
+	FROM information_schema.columns
+	WHERE table_name = 'nhtsa_accident_2019_raw'
+	```
+	<br>
+   
   | column_name  | data_type         | character_maximum_length |
   |--------------|-------------------|--------------------------|
   | state        | character varying | 255                      |
@@ -114,8 +116,9 @@ After the NHTSA `accident.csv` file was downloaded to local storage, Microsoft E
   | cf3name      | character varying | 255                      |
   | fatals       | character varying | 255                      |
   | drunk_dr     | character varying | 255                      |
-  
-    </details>
+
+</details>
+
 <br><br>
 
 The scope of the project requires 11 of the 91 data elements stored in `nhtsa_accident_2019_raw`.  
@@ -139,12 +142,14 @@ Data elements `st_case`, `statename`, `countyname`, `year`, `month`, `day`, `hou
   ```
  
   <details>
-    <summary><strong>View Table Summary</strong></summary> 
-    <br>
-    <code>SELECT *
-FROM accident_temp
-LIMIT 5</code>
-    <br><br>
+    <summary><strong>View Table Summary</strong></summary><br>
+	  
+```sql
+   SELECT *
+   FROM accident_temp
+   LIMIT 5
+```
+<br>
         
   | id    | state   | county        | year | month | day | hour | day_of_week | rural_urban | light_condition    | fatalities |
   |-------|---------|---------------|------|-------|-----|------|-------------|-------------|--------------------|------------|
@@ -174,13 +179,15 @@ LIMIT 5</code>
 	 ```
 	
 	<details>
-	<summary><strong><code>View Table Summary</code></strong></summary>  
-	<br>
-	<code>SELECT *
+	<summary><strong><code>View Table Summary</code></strong></summary><br>
+		
+	```sql
+	SELECT *
 	FROM accident_temp
 	ORDER BY id
-	LIMIT 5</code>
-	<br><br>
+	LIMIT 5
+	```
+	<br>
 	
 	| id    | state   | county   | year | month | day | hour | day_of_week | rural_urban | light_condition    | fatalities |
 	|-------|---------|----------|------|-------|-----|------|-------------|-------------|--------------------|------------|
@@ -257,12 +264,15 @@ LIMIT 5</code>
 	```
 	  
 	<details>
-	<summary><strong><code>View Table Summary</code></strong></summary>  
-	<br>
-	<code>SELECT *
+	<summary><strong><code>View Table Summary</code></strong></summary><br>
+			
+	```sql
+	SELECT *
 	FROM accident_temp
 	ORDER BY id
-	LIMIT 5</code><br><br>
+	LIMIT 5
+	```
+	<br>
 		  
 	| id    | state   | county   | year | month | day | hour | day_of_week | rural_urban | light_condition    | fatalities |
 	|-------|---------|----------|------|-------|-----|------|-------------|-------------|--------------------|------------|
@@ -566,11 +576,14 @@ LIMIT 5</code>
 	```
 	  
 	<details>
-	<summary><strong><code>View Table Summary</code></strong></summary>  
-	<br>
-	<code>SELECT DISTINCT hour
+	<summary><strong><code>View Table Summary</code></strong></summary><br>
+			
+	```sql
+	SELECT DISTINCT hour
 	FROM accident_temp
-	ORDER BY hour </code><br><br>
+	ORDER BY hour
+	```
+	<br>
 		  
 	| hour |
 	|--------|
@@ -645,10 +658,13 @@ LIMIT 5</code>
 		```
 		  
 		<details>
-		<summary><strong><code>View Table Summary</code></strong></summary>  
+		<summary><strong><code>View Table Summary</code></strong></summary><br>
+			
+		```sql
+		SELECT DISTINCT light_condition
+		FROM accident_temp
+		```
 		<br>
-		<code>SELECT DISTINCT light_condition
-		FROM accident_temp</code><br><br>
 		
 		| light_condition         |
 		|-------------------------|
@@ -670,10 +686,13 @@ LIMIT 5</code>
 		```
 		  
 		<details>
-		<summary><strong><code>View Table Summary</code></strong></summary>  
+		<summary><strong><code>View Table Summary</code></strong></summary><br>
+			
+		```sql
+		SELECT DISTINCT light_condition
+		FROM accident_temp
+		```
 		<br>
-		<code>SELECT DISTINCT light_condition
-		FROM accident_temp</code><br><br>
 	
 		| light_condition |
 		|-----------------|
@@ -722,10 +741,13 @@ LIMIT 5</code>
 		```
 		  
 		<details>
-		<summary><strong><code>View Table Summary</code></strong></summary>  
+		<summary><strong><code>View Table Summary</code></strong></summary><br>
+			
+		```sql
+		SELECT DISTINCT rural_urban
+		FROM accident_temp
+		```
 		<br>
-		<code>SELECT DISTINCT rural_urban
-		FROM accident_temp</code><br><br>
 			  
 		| rural_urban |
 		|-------------|
@@ -759,12 +781,15 @@ LIMIT 5</code>
 		```
 	
 	   	<details>
-		<summary><strong><code>View Table Summary</code></strong></summary>  
-		<br>
-		<code>SELECT *
+		<summary><strong><code>View Table Summary</code></strong></summary><br>
+			
+		```sql
+		SELECT *
 		FROM accident_temp
 		ORDER BY id
-		LIMIT 5</code><br><br>
+		LIMIT 5
+		```
+		<br>
 	
 	 	| state   | county   | year | month | day | hour | day_of_week | rural_urban | light_condition | fatalities | time                |
 		|---------|----------|------|-------|-----|------|-------------|-------------|-----------------|------------|---------------------|
@@ -784,12 +809,15 @@ LIMIT 5</code>
 		```
 	
 	   	<details>
-		<summary><strong><code>View Table Summary</code></strong></summary>  
-		<br>
-		<code>SELECT *
+		<summary><strong><code>View Table Summary</code></strong></summary><br>
+			
+		```sql
+		SELECT *
 		FROM accident_temp
 		ORDER BY id
-		LIMIT 5</code><br><br>
+		LIMIT 5
+		```
+		<br>
 	
 		| id    | state   | county   | year | month | day | day_of_week | rural_urban | light_condition | fatalities | time                |
 		|-------|---------|----------|------|-------|-----|-------------|-------------|-----------------|------------|---------------------|
@@ -823,12 +851,15 @@ LIMIT 5</code>
 	ADD PRIMARY KEY(id)
 	```	
 	<details>
-	<summary><strong><code>View Table Summary</code></strong></summary>  
-	<br>
-	<code>SELECT *
+	<summary><strong><code>View Table Summary</code></strong></summary><br>
+		
+	```sql
+	SELECT *
 	FROM accident_data_2019
 	ORDER BY id
-	LIMIT 5</code><br><br>
+	LIMIT 5
+	```
+	<br>
 	
 	| id    | state   | county   | year | month | day | day_of_week | rural_urban | light_condition | fatalities | time                |
 	|-------|---------|----------|------|-------|-----|-------------|-------------|-----------------|------------|---------------------|
@@ -859,12 +890,14 @@ Microsoft Excel was utilized to perform an intial inspection on the previously d
 * Table `census_raw` contains 3 columns.  
 
   <details>
-	<summary><strong>View Data Dictionary</strong></summary>  
-  <br>
-    <code>SELECT column_name, data_type, character_maximum_length
-  FROM information_schema.columns
-  WHERE table_name = 'census_raw'</code>
-  <br><br>
+	<summary><strong>View Data Dictionary</strong></summary><br>
+	  
+	```sql
+	SELECT column_name, data_type, character_maximum_length
+	FROM information_schema.columns
+	WHERE table_name = 'census_raw'
+	```
+	<br>
 
   | column_name     | data_type         | character_maximum_length |
   |-----------------|-------------------|--------------------------|
@@ -875,11 +908,14 @@ Microsoft Excel was utilized to perform an intial inspection on the previously d
   </details>
  
   <details>
-	<summary><strong>View Table Summary</strong></summary>
-	  <br>
-	  <code>SELECT *
+	<summary><strong>View Table Summary</strong></summary><br>
+	  
+	```sql
+	SELECT *
 	FROM census_raw
-	LIMIT 5</code><br><br>
+	LIMIT 5
+	```
+	<br>
 
    | geography           | geographic_area                           | total |
    |---------------------|-------------------------------------------|-------|
@@ -905,12 +941,14 @@ CREATE TEMP TABLE census_temp AS
 ```
 
 <details>
-<summary><strong>View Table Summary</strong></summary> 
-<br>
-<code>SELECT *
+<summary><strong>View Table Summary</strong></summary><br>
+	
+```sql
+SELECT *
 FROM census_temp
-LIMIT 5</code>
-<br><br>
+LIMIT 5
+```
+<br>
 	
 | geographic_area                           | state   | total |
 |-------------------------------------------|---------|-------|
@@ -1033,10 +1071,13 @@ LIMIT 5</code>
 	```
 	  
 	<details>
-	<summary><strong><code>View Table Summary</code></strong></summary>  
+	<summary><strong><code>View Table Summary</code></strong></summary><br>
+		
+	```sql
+	SELECT *
+	FROM state_pop
+	```
 	<br>
-	<code>SELECT *
-	FROM state_pop</code><br><br>
 
 	| state                | population |
 	|----------------------|------------|
