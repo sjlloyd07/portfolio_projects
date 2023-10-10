@@ -878,7 +878,7 @@ Data elements `st_case`, `statename`, `countyname`, `year`, `month`, `day`, `hou
 # U.S. Census Data
 ***
 # 📋 Preparation
-Microsoft Excel was utilized to perform an intial inspection on the previously downloaded census population file `DECENNIALPL2020.P1-Data.csv`. Inspection revealed that the only required data elements for the project analysis were located in the first three columns. The file was altered using Excel to remove all but the first 3 columns of data before being saved as `DECENNIALPL2020.P1-Data-V2.csv` in preparation to be uploaded to the local PostgreSQL server. At this point, table `census_raw` [was created](https://github.com/sjlloyd07/fatal_crash_project/blob/971e641e932c051cd2ce5cd63d7edf87706d1531/fatal_crash_project_queries.sql#L250) with a `CREATE TABLE` statement. in which to copy the altered dataset..
+Microsoft Excel was utilized to perform an intial inspection on the previously downloaded census population file `DECENNIALPL2020.P1-Data.csv`. Inspection revealed that the only required data elements for the project analysis were located in the first three columns. The file was altered using Excel to remove all but the first 3 columns of data before being saved as `DECENNIALPL2020.P1-Data-V2.csv` in preparation to be uploaded to the local PostgreSQL server. At this point, table `census_raw` [was created](/fatal_crash_project/queries.sql#L250) with a `CREATE TABLE` statement. in which to copy the altered dataset..
 
   * The raw data was copied from the `DECENNIALPL2020.P1-Data-V2.csv` file into the `census_raw` table using the `psql` client copy command: `\copy`. 
 
