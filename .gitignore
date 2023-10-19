@@ -1,0 +1,8 @@
+# ignore all files in .gitignore root-folder
+
+.gitignore/
+
+
+# ignore all files in .gitignore sub-folders
+
+**/.gitignore/
