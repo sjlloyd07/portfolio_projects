@@ -1,31 +1,30 @@
 # Introduction
 ### Scenario: After a company wide inventory count, a computer hardware company requests a summary of its current inventory. The inventory is located at multiple international warehouses.
 
-The company wants a summary of that includes the following:
+The company stakeholders request a summary of the inventory dataset that includes the following:
 
-* check that inventory count includes all products and warehouses
+* confirmation that the inventory dataset includes all products and warehouses
 
 * total product *count* and *value*
- * company-wide
- * at each warehouse
+	* company-wide
+	* at each warehouse
  
 * total product *count* and *value* of **each product category** w/ percentage of total
- * company-wide
- * at each warehouse
+	* company-wide
+	* at each warehouse
  
-* product with highest gross value 
- * company-wide
- * at each warehouse
+* product with highest gross value
+	* company-wide
+	* at each warehouse
 
 * most and least profitable product
- * at each warehouse
+	* at each warehouse
+
+<br><br>
 
 
-
-
-## Steps taken
 <!-- inspect data with excel to determine structure -->
-### Preparation 
+## Data Preparation 
 The computer hardware store inventory dataset is stored in a `.csv` file that was downloaded to local storage. Microsoft Excel was utilized for initial data inspection. PostgreSQL was utilized for further cleaning, manipulation, and analysis.
 
 [kaggle dataset](https://www.kaggle.com/datasets/ivanchvez/hardwarestore?select=hardwareStore.csv)
@@ -41,6 +40,10 @@ The dataset consists of 22 columns.
 A postgres database was created on a local server with a `CREATE DATABASE` statement in order to store the inventory analysis project.
 
 Using the `.csv` column names, table `inventory_raw` was created to store the raw dataset.
+
+
+<details>
+	<summary><strong>View <code>CREATE TABLE</code> statement</strong></summary>
 
 ```sql
 CREATE TABLE inventory_raw (
@@ -68,7 +71,8 @@ CREATE TABLE inventory_raw (
 	COUNTRY_NAME text
 )
 ```
-
+</details>
+<br>
 
 Dataset was uploaded to `inventory_raw` with a psql `/copy` statement.
 
