@@ -1,0 +1,17 @@
+--show tables/columns data types
+SELECT 
+	table_name,
+	column_name,
+	data_type,
+	character_maximum_length
+FROM information_schema.columns 
+WHERE table_schema = 'public' AND
+	table_name != 'accident_raw_2019'
+ORDER BY table_name;
+
+--must extract and cast to integer when changing types timestamp w/o tz to int
+ALTER TABLE accident
+ALTER COLUMN hour TYPE INT
+USING CAST(EXTRACT('hour' FROM hour) AS integer)
+
+
