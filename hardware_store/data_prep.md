@@ -1,5 +1,4 @@
-
-### Preparation 
+# Preparation 
 The computer hardware store inventory dataset is stored in a `.csv` file that was downloaded to local storage. Microsoft Excel was utilized for initial data inspection. PostgreSQL was utilized for further cleaning, manipulation, and analysis.
 
 [kaggle dataset](https://www.kaggle.com/datasets/ivanchvez/hardwarestore?select=hardwareStore.csv)
@@ -40,7 +39,7 @@ CREATE TABLE inventory_raw (
 	CITY text,
 	STATE text,
 	COUNTRY_NAME text
-)
+	);
 ```
 
 
@@ -62,90 +61,103 @@ LIMIT 5
 | 1           | CPU           | 8          | Intel Xeon E5-1650 V4            | Speed:3.6GHz/Cores:6/TDP:140W | Speed:3.6GHz  | Cores:6       | TDP:140W      | 0             | 535.47        | 601.99     | US         | 2         | 8           | 4            | 67       | SeattleWashington | 2004 Charade Rd       | 98199       | Seattle             | Washington      | United States of America |
 | 1           | CPU           | 72         | Intel Xeon E5-2630 V3 (OEM/Tray) | Speed:2.4GHz/Cores:8/TDP:85W  | Speed:2.4GHz  | Cores:8       | TDP:85W       | 0             | 421.9         | 589.99     | AU         | 3         | 13          | 6            | 35       | Sydney            | 12-98 Victoria Street | 2901        | Sydney              | New South Wales | Australia                |
 
+<br>
 
 The `inventory_raw` table was checked for duplicate rows using the `ROW_NUMBER()` window function.
 
 ```sql
-SELECT
-	ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn,
-	*	
+SELECT ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn, *	
 FROM inventory_raw
 ORDER BY rn DESC
 ```
 
-No duplicates were found.
+**Results:**
+
+**No duplicates were found.**
+
+<br>
 
 <!-- start normalization process of new database -->
 At this point, the raw dataset was ready to undertake normalization in order to maintain integrity and avoid redundancy.
 
-### Begin normalizaion
+<br><br>
+
+## Normalization
 <!-- make ERD -->
+### Entity Relationship Diagram
 An entity relationship diagram (ERD) was constructed to represent the table relationships.
 
-[link to img](img link)
+<br>
+
+![computer_hardware_ERD](/hardware_store/images/computerHardware_erd.png)
+
+<br>
 
 <!-- drop location_id - redundant data with warehouse_id -->
-Column `location_id` is redundant to column `warehouse_id` in this analysis.  Column `location_id` data was disregarded.
+* Column `location_id` is redundant to column `warehouse_id` in this analysis.  Column `location_id` data was dropped from the dataset.
 
+<br>
+
+### Database
 <!-- create new database tables -->
 Tables `category`, `product`, `region`, `country`, `warehouse`, and `inventory` were created.
 
 <details>
-	<summary><strong>View <code>CREATE TABLE</code> statements.</strong></summary>
+	<summary><strong>View <code>CREATE TABLE</code> statements.</strong></summary><br>
+	
+```sql
+CREATE TABLE IF NOT EXISTS category (
+	id INT CONSTRAINT pk_cat PRIMARY KEY,
+	name TEXT NOT NULL
+	);
 
-	```sql 
-	CREATE TABLE IF NOT EXISTS category (
-		id INT CONSTRAINT pk_cat PRIMARY KEY,
-		name TEXT NOT NULL
-		);
+CREATE TABLE IF NOT EXISTS product (
+	id INT CONSTRAINT pk_product PRIMARY KEY,
+	name TEXT NOT NULL,
+	description TEXT NOT NULL,
+	std_cost DECIMAL NOT NULL,
+	list_price DECIMAL NOT NULL,
+	category_id INT NOT NULL,
+	CONSTRAINT fk_product_category FOREIGN KEY(category_id) 
+		REFERENCES category(id) ON DELETE CASCADE
+	);
 
-	CREATE TABLE IF NOT EXISTS product (
-		id INT CONSTRAINT pk_product PRIMARY KEY,
-		name TEXT NOT NULL,
-		description TEXT NOT NULL,
-		std_cost DECIMAL NOT NULL,
-		list_price DECIMAL NOT NULL,
-		category_id INT NOT NULL,
-		CONSTRAINT fk_product_category FOREIGN KEY(category_id) 
-			REFERENCES category(id) ON DELETE CASCADE
-		);
+CREATE TABLE IF NOT EXISTS region (
+	id INT CONSTRAINT pk_region PRIMARY KEY,
+	hemisphere TEXT NOT NULL
+	);
 
-	CREATE TABLE IF NOT EXISTS region (
-		id INT CONSTRAINT pk_region PRIMARY KEY,
-		hemisphere TEXT NOT NULL
-		);
-		
-	CREATE TABLE IF NOT EXISTS country (
-		id TEXT CONSTRAINT pk_country PRIMARY KEY,
-		name TEXT NOT NULL,
-		region_id INT NOT NULL,
-		CONSTRAINT pk_country_region FOREIGN KEY (region_id)
-			REFERENCES region(id) ON DELETE CASCADE
-		);
+CREATE TABLE IF NOT EXISTS country (
+	id TEXT CONSTRAINT pk_country PRIMARY KEY,
+	name TEXT NOT NULL,
+	region_id INT NOT NULL,
+	CONSTRAINT pk_country_region FOREIGN KEY (region_id)
+		REFERENCES region(id) ON DELETE CASCADE
+	);
 
-	CREATE TABLE IF NOT EXISTS warehouse (
-		id INT CONSTRAINT pk_warehouse PRIMARY KEY,
-		name TEXT NOT NULL,
-		address TEXT NOT NULL,
-		postal_code TEXT NOT NULL,
-		city TEXT NOT NULL,
-		state TEXT NOT NULL,
-		country_id TEXT NOT NULL,
-		CONSTRAINT fk_warehouse_country FOREIGN KEY (country_id)
-			REFERENCES country(id) ON DELETE CASCADE
-		);
-		
-	CREATE TABLE IF NOT EXISTS inventory (
-		product_id INT NOT NULL,
-		warehouse_id INT NOT NULL,
-		quantity INT NOT NULL,
-		CONSTRAINT pk_inv PRIMARY KEY (product_id, warehouse_id),
-		CONSTRAINT fk_inv_product FOREIGN KEY (product_id)
-			REFERENCES product(id) ON DELETE CASCADE,
-		CONSTRAINT fk_inv_wh FOREIGN KEY (warehouse_id)
-			REFERENCES warehouse(id) ON DELETE CASCADE
-		);
-	```
+CREATE TABLE IF NOT EXISTS warehouse (
+	id INT CONSTRAINT pk_warehouse PRIMARY KEY,
+	name TEXT NOT NULL,
+	address TEXT NOT NULL,
+	postal_code TEXT NOT NULL,
+	city TEXT NOT NULL,
+	state TEXT NOT NULL,
+	country_id TEXT NOT NULL,
+	CONSTRAINT fk_warehouse_country FOREIGN KEY (country_id)
+		REFERENCES country(id) ON DELETE CASCADE
+	);
+
+CREATE TABLE IF NOT EXISTS inventory (
+	product_id INT NOT NULL,
+	warehouse_id INT NOT NULL,
+	quantity INT NOT NULL,
+	CONSTRAINT pk_inv PRIMARY KEY (product_id, warehouse_id),
+	CONSTRAINT fk_inv_product FOREIGN KEY (product_id)
+		REFERENCES product(id) ON DELETE CASCADE,
+	CONSTRAINT fk_inv_wh FOREIGN KEY (warehouse_id)
+		REFERENCES warehouse(id) ON DELETE CASCADE
+	);
+```
 
 </details>
 
@@ -163,14 +175,13 @@ INSERT INTO category
 ```
 
 <details>
-	<summary><strong>View Table</strong></summary>
-	<br>
+	<summary><strong>View Table</strong></summary><br>
 	
-	```sql
-	SELECT * 
-	FROM category
-	;
-	```
+```sql
+SELECT * 
+FROM category
+;
+```
 	
 	<insert table>
 
@@ -179,30 +190,29 @@ INSERT INTO category
 
 ```sql
 INSERT INTO product(id, name, description, std_cost, list_price, category_id)
-	SELECT 
-		DISTINCT product_id, product_name, description, standard_cost, list_price, category_id
+	SELECT DISTINCT product_id, product_name, description, standard_cost, list_price, category_id
 	FROM inventory_raw
 	ORDER BY product_id
 	;
 ```
 
 <details>
-	<summary><strong>View Table</strong></summary>
-	<br>
+	<summary><strong>View Table</strong></summary><br>
 	
-	```sql
-	SELECT * 
-	FROM product 
-	LIMIT 5;
-	```
+```sql
+SELECT * 
+FROM product 
+LIMIT 5;
+```
 	
 	<insert table>
 
 </details>
 <br>
 
-ISSUE: region id has no definition for reference
-SOLUTION: further investigation of the dataset reveals that this variable is likely hemisphere and data analysis will proceed as such
+**ISSUE:** region id has no definition for reference
+
+**SOLUTION:** further investigation of the dataset reveals that this variable is likely hemisphere and data analysis will proceed as such
 
 ```sql
 INSERT INTO region
@@ -220,14 +230,13 @@ INSERT INTO region
 ```
 
 <details>
-	<summary><strong>View Table</strong></summary>
-	<br>
+	<summary><strong>View Table</strong></summary><br>
 	
-	```sql
-	SELECT * 
-	FROM region 
-	;
-	```
+```sql
+SELECT * 
+FROM region 
+;
+```
 
 	<insert table>
 
@@ -244,14 +253,13 @@ INSERT INTO country
 ```
 
 <details>
-	<summary><strong>View Table</strong></summary>
-	<br>
+	<summary><strong>View Table</strong></summary><br>
 	
-	```sql
-	SELECT * 
-	FROM country 
-	;
-	```
+```sql
+SELECT * 
+FROM country 
+;
+```
 	
 	<insert table>
 
@@ -271,14 +279,13 @@ INSERT INTO warehouse
 ```
 
 <details>
-	<summary><strong>View Table</strong></summary>
-	<br>
+	<summary><strong>View Table</strong></summary><br>
 	
-	```sql
-	SELECT * 
-	FROM warehouse 
-	;
-	```
+```sql
+SELECT * 
+FROM warehouse 
+;
+```
 	
 	<insert table>
 
@@ -296,14 +303,13 @@ INSERT INTO inventory
 ```
 
 <details>
-	<summary><strong>View Table</strong></summary>
-	<br>
+	<summary><strong>View Table</strong></summary><br>
 	
-	```sql
-	SELECT * 
-	FROM inventory 
-	LIMIT 5;
-	```
+```sql
+SELECT * 
+FROM inventory 
+LIMIT 5;
+```
 	<insert table>
 
 </details>
@@ -316,6 +322,7 @@ INSERT INTO inventory
 **TABLE: warehouse*
 
 **ISSUE:** multiple `name` values contain warehouse name and state
+
 **ACTION:** remove state where exists w/ `SUBSTRING()`
 
 ```sql 
@@ -332,6 +339,7 @@ SET name =
 <br>
 
 **ISSUE:** `state` column - Mexican state name has character encoding error
+
 **ACTION:** fix Mexican state character encoding with `REPLACE()`
 
 <br>
@@ -346,24 +354,24 @@ WHERE country_id = 'MX'
 <br>
 
 <details>
-	<summary><strong>View Table</strong></summary>
-	<br>
+	<summary><strong>View Table</strong></summary><br>
 	
-	```sql
-	SELECT * 
-	FROM warehouse 
-	;
-	```
+```sql
+SELECT * 
+FROM warehouse 
+;
+```
 	<insert table>
 
 </details>
-<br>
+<br><br>
 
 
 
 **TABLE: product**
 
 **ISSUE:** confirm product ids are unique to name-description pairs by checking for duplicate name-description pairs
+
 **ACTION:** check for duplicates using `ROW_NUMBER()`
 
 * 1: partition name-description pairs with row_number() function, sort duplicates to top of list
@@ -435,13 +443,13 @@ WHERE country_id = 'MX'
 
 **ADVICE:** update description of later released products to reflect the difference or keep the same product id for all versions. Further investigation into the initial data entry is needed before updating dataset.
 	
-	
+<br><br>
+ 
 **ISSUE:** confirm all inventory table rows are unique
 **ACTION:** use row_number() to return any duplicate rows sorted to the top of the list
 
 ```sql
-SELECT
-	*, ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn
+SELECT *, ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn
 FROM inventory
 ORDER BY rn DESC
 ```
