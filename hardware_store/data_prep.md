@@ -1,9 +1,8 @@
 # Preparation 
-The computer hardware store inventory dataset is stored in a `.csv` file that was downloaded to local storage. Microsoft Excel was utilized for initial data inspection. PostgreSQL was utilized for further cleaning, manipulation, and analysis.
+The computer hardware store inventory dataset is stored in a `.csv` file that was downloaded to local storage. Microsoft Excel was utilized for initial data inspection. PostgreSQL was utilized for cleaning, manipulation, and analysis.
 
-[kaggle dataset](https://www.kaggle.com/datasets/ivanchvez/hardwarestore?select=hardwareStore.csv)
+The raw dataset consists of **22** columns. 
 
-The dataset consists of 22 columns. 
 <!-- column names -->
 | CATEGORY_ID | CATEGORY_NAME | PRODUCT_ID | PRODUCT_NAME | DESCRIPTION | DESCRIPTION - Detail 1 | DESCRIPTION - Detail 2 | DESCRIPTION - Detail 3 | DESCRIPTION - Detail 4 | STANDARD_COST | LIST_PRICE | COUNTRY_ID | REGION_ID | LOCATION_ID | WAREHOUSE_ID | QUANTITY | WAREHOUSE_NAME | ADDRESS | POSTAL_CODE | CITY | STATE | COUNTRY_NAME |
 |-------------|---------------|------------|--------------|-------------|------------------------|------------------------|------------------------|------------------------|---------------|------------|------------|-----------|-------------|--------------|----------|----------------|---------|-------------|------|-------|--------------|
@@ -14,7 +13,7 @@ The dataset consists of 22 columns.
 
 A postgres database was created on a local server with a `CREATE DATABASE` statement in order to store the inventory analysis project.
 
-Using the `.csv` column names, table `inventory_raw` was created to store the raw dataset.
+Using the `.csv` file column names, table `inventory_raw` was created to store the raw data in the database.
 
 
 <details>
@@ -49,12 +48,12 @@ CREATE TABLE inventory_raw (
 </details>
 <br><br>
 
-The dataset was uploaded to `inventory_raw` with a psql `/copy` statement.
+The dataset was uploaded to table `inventory_raw` with a psql `/copy` statement.
 
 `\copy inventory_raw FROM 'C:\Users\steve\portfolio_projects\hardware_store\hardwareStore.csv' DELIMITER ',' CSV HEADER;`
 
 <details>
-	<summary><strong>View Results Summary</strong></summary>
+	<summary><strong>View Table Summary</strong></summary>
 	
 ```sql
 SELECT *
@@ -82,15 +81,25 @@ ORDER BY rn DESC
 ```
 
 <details>
-	<summary><strong>View Results</strong></summary><br>
+	<summary><strong>View Results Summary</strong></summary><br>
 
+ | rn | category_id | category_name | product_id | product_name          | description                    | description_1 | description_2 | description_3 | description_4 | standard_cost | list_price | country_id | region_id | location_id | warehouse_id | quantity | warehouse_name | address               | postal_code | city            | state           | country_name             |
+|----|-------------|---------------|------------|-----------------------|--------------------------------|---------------|---------------|---------------|---------------|---------------|------------|------------|-----------|-------------|--------------|----------|----------------|-----------------------|-------------|-----------------|-----------------|--------------------------|
+| 1  | 1           | CPU           | 2          | Intel Xeon E5-2697 V4 | Speed:2.3GHz,Cores:18,TDP:145W | Speed:2.3GHz  | Cores:18      | TDP:145W      | 0             | 2144.4        | 2554.99    | US         | 2         | 7           | 3            | 100      | New Jersey     | 2007 Zagora St        | 50090       | South Brunswick | New Jersey      | United States of America |
+| 1  | 1           | CPU           | 2          | Intel Xeon E5-2697 V4 | Speed:2.3GHz,Cores:18,TDP:145W | Speed:2.3GHz  | Cores:18      | TDP:145W      | 0             | 2144.4        | 2554.99    | CA         | 2         | 9           | 5            | 71       | Toronto        | 147 Spadina Ave       | M5V 2L7     | Toronto         | Ontario         | Canada                   |
+| 1  | 1           | CPU           | 2          | Intel Xeon E5-2697 V4 | Speed:2.3GHz,Cores:18,TDP:145W | Speed:2.3GHz  | Cores:18      | TDP:145W      | 0             | 2144.4        | 2554.99    | AU         | 3         | 13          | 6            | 58       | Sydney         | 12-98 Victoria Street | 2901        | Sydney          | New South Wales | Australia                |
+| 1  | 1           | CPU           | 2          | Intel Xeon E5-2697 V4 | Speed:2.3GHz,Cores:18,TDP:145W | Speed:2.3GHz  | Cores:18      | TDP:145W      | 0             | 2144.4        | 2554.99    | MX         | 2         | 23          | 7            | 46       | Mexico City    | Mariano Escobedo 9991 | 11932       | Monterrey       | Nuevo LeÃ³n     | Mexico                   |
+| 1  | 1           | CPU           | 2          | Intel Xeon E5-2697 V4 | Speed:2.3GHz,Cores:18,TDP:145W | Speed:2.3GHz  | Cores:18      | TDP:145W      | 0             | 2144.4        | 2554.99    | CN         | 3         | 11          | 8            | 34       | Beijing        | 40-5-12 Laogianggen   | 190518      | Beijing         | Shenzhen        | China                    |
+
+<br>
+ 
  **No duplicates were found.**
 
 </details>
 <br>
 
 <!-- start normalization process of new database -->
-At this point, the raw dataset was ready to undertake normalization in order to maintain integrity and avoid redundancy.
+At this point, steps were taken to normalize the raw dataset in order to maintain data integrity and avoid redundancy.
 
 <br><br>
 
@@ -112,7 +121,7 @@ An entity relationship diagram (ERD) was constructed to represent the table rela
 
 ### Database
 <!-- create new database tables -->
-Tables `category`, `product`, `region`, `country`, `warehouse`, and `inventory` were created.
+The ERD was used as a guide to create the following tables and define their corresponding primary and foreign keys: `category`, `product`, `region`, `country`, `warehouse`, and `inventory`.
 
 <details>
 	<summary><strong>View <code>CREATE TABLE</code> statements.</strong></summary><br>
@@ -175,8 +184,11 @@ CREATE TABLE IF NOT EXISTS inventory (
 
 <br><br>
 
-Data was extracted from `inventory_raw` table into newly created tables.
+#### Data was extracted from `inventory_raw` table into newly created tables.
 
+<br>
+
+**`category`**
 
 ```sql
 INSERT INTO category
@@ -195,10 +207,17 @@ FROM category
 ;
 ```
 	
-	<insert table>
+| id | name         |
+|----|--------------|
+| 1  | CPU          |
+| 2  | Video Card   |
+| 4  | Mother Board |
+| 5  | Storage      |
 
 </details>
-<br>
+<br><br><br>
+
+**`product`**
 
 ```sql
 INSERT INTO product(id, name, description, std_cost, list_price, category_id)
@@ -216,25 +235,30 @@ SELECT *
 FROM product 
 LIMIT 5;
 ```
-	
-	<insert table>
+
+| id | name                  | description                                               | std_cost | list_price | category_id |
+|----|-----------------------|-----------------------------------------------------------|----------|------------|-------------|
+| 2  | Intel Xeon E5-2697 V4 | Speed:2.3GHz,Cores:18,TDP:145W                            | 2144.4   | 2554.99    | 1           |
+| 3  | Corsair CB-9060011-WW | Chipset:GeForce GTX 1080 Ti,Memory:11GBCore Clock:1.57GHz | 573.51   | 799.99     | 2           |
+| 4  | AMD 100-505989        | Chipset:FirePro W9100,Memory:32GBCore Clock:930MHz        | 2128.67  | 2699.99    | 2           |
+| 5  | PNY VCQK6000-PB       | Chipset:Quadro K6000,Memory:12GBCore Clock:902MHz         | 1740.31  | 2290.79    | 2           |
+| 6  | Zotac ZT-P10810A-10P  | Chipset:GeForce GTX 1080 Ti,Memory:11GBCore Clock:1.48GHz | 702.35   | 849.99     | 2           |
 
 </details>
-<br>
+<br><br><br>
 
-**ISSUE:** region id has no definition for reference
+**`region`**
 
-**SOLUTION:** further investigation of the dataset reveals that this variable is likely hemisphere and data analysis will proceed as such
+⚠️ **ISSUE:** `region_id` values have no corresponding column for reference
+
+🛠️ **SOLUTION:** further investigation of the dataset reveals that this variable is likely hemisphere and data analysis will proceed as such
 
 ```sql
 INSERT INTO region
-	SELECT 
-		DISTINCT region_id,
-		(CASE
-			WHEN region_id = 2
+	SELECT	DISTINCT region_id,
+		(CASE	WHEN region_id = 2
 			THEN 'WESTERN'
-		ELSE
-			'EASTERN'
+			ELSE 'EASTERN'
 		END) AS hemisphere
 	FROM inventory_raw
 	ORDER BY region_id
@@ -250,11 +274,15 @@ FROM region
 ;
 ```
 
-	<insert table>
+| id | hemisphere |
+|----|------------|
+| 2  | WESTERN    |
+| 3  | EASTERN    |
 
 </details>
-<br>
+<br><br><br>
 
+**`country`**
 
 ```sql
 INSERT INTO country
@@ -273,16 +301,23 @@ FROM country
 ;
 ```
 	
-	<insert table>
+| id | name                     | region_id |
+|----|--------------------------|-----------|
+| AU | Australia                | 3         |
+| CA | Canada                   | 2         |
+| CN | China                    | 3         |
+| IN | India                    | 3         |
+| MX | Mexico                   | 2         |
+| US | United States of America | 2         |
 
 </details>
-<br>
+<br><br><br>
 
+**`warehouse`**
 
 ```sql
 INSERT INTO warehouse
-	SELECT 
-		DISTINCT warehouse_id, 
+	SELECT	DISTINCT warehouse_id, 
 		warehouse_name, address, postal_code, 
 		city, state, country_id
 	FROM inventory_raw
@@ -295,16 +330,28 @@ INSERT INTO warehouse
 	
 ```sql
 SELECT * 
-FROM warehouse 
+FROM warehouse
+ORDER BY id
 ;
 ```
 	
-	<insert table>
+| id | warehouse_name      | address               | postal_code | city                | state           | country_id |
+|--------------|---------------------|-----------------------|-------------|---------------------|-----------------|------------|
+| 1            | Southlake, Texas    | 2014 Jabberwocky Rd   | 26192       | Southlake           | Texas           | US         |
+| 2            | San Francisco       | 2011 Interiors Blvd   | 99236       | South San Francisco | California      | US         |
+| 3            | New Jersey          | 2007 Zagora St        | 50090       | South Brunswick     | New Jersey      | US         |
+| 4            | Seattle, Washington | 2004 Charade Rd       | 98199       | Seattle             | Washington      | US         |
+| 5            | Toronto             | 147 Spadina Ave       | M5V 2L7     | Toronto             | Ontario         | CA         |
+| 6            | Sydney              | 12-98 Victoria Street | 2901        | Sydney              | New South Wales | AU         |
+| 7            | Mexico City         | Mariano Escobedo 9991 | 11932       | Monterrey           | Nuevo LeÃ³n     | MX         |
+| 8            | Beijing             | 40-5-12 Laogianggen   | 190518      | Beijing             | Shenzhen        | CN         |
+| 9            | Bombay              | 1298 Vileparle (E)    | 490231      | Bombay              | Maharashtra     | IN         |
+
 
 </details>
-<br>
+<br><br><br>
 
-
+**`inventory`**
 
 ```sql
 INSERT INTO inventory
@@ -315,44 +362,52 @@ INSERT INTO inventory
 ```
 
 <details>
-	<summary><strong>View Table</strong></summary><br>
+	<summary><strong>View Table Summary</strong></summary><br>
 	
 ```sql
 SELECT * 
 FROM inventory 
 LIMIT 5;
 ```
-	<insert table>
+
+| product_id | warehouse_id | quantity |
+|------------|--------------|----------|
+| 2          | 3            | 100      |
+| 2          | 5            | 71       |
+| 2          | 6            | 58       |
+| 2          | 7            | 46       |
+| 2          | 8            | 34       |
 
 </details>
-<br>
+<br><br><br>
 
 
 
 ## Cleaning
 
-**TABLE: warehouse*
+### TABLE: `warehouse`
 
-**ISSUE:** multiple `name` values contain warehouse name and state
+⚠️ **ISSUE:** multiple `name` values contain warehouse name and state
 
-**ACTION:** remove state where exists w/ `SUBSTRING()`
+🛠️ **ACTION:** remove state where exists w/ `SUBSTRING()`
+
+<br>
 
 ```sql 
 UPDATE warehouse
 SET name = 
-	(CASE
-		WHEN STRPOS(name, ',') > 0
+	(CASE	WHEN STRPOS(name, ',') > 0
 	 	THEN SUBSTRING(name, 0, STRPOS(name, ','))
-	 ELSE name
+		 ELSE name
 	 END)
 ;
 ```
 
-<br>
+<br><br>
 
-**ISSUE:** `state` column - Mexican state name has character encoding error
+⚠️ **ISSUE:** `state` column - Mexican state name has character encoding error
 
-**ACTION:** fix Mexican state character encoding with `REPLACE()`
+🛠️ **ACTION:** fix Mexican state character encoding with `REPLACE()`
 
 <br>
 
@@ -373,27 +428,37 @@ SELECT *
 FROM warehouse 
 ;
 ```
-	<insert table>
+
+| id | name          | address               | postal_code | city                | state           | country_id |
+|----|---------------|-----------------------|-------------|---------------------|-----------------|------------|
+| 1  | Southlake     | 2014 Jabberwocky Rd   | 26192       | Southlake           | Texas           | US         |
+| 2  | San Francisco | 2011 Interiors Blvd   | 99236       | South San Francisco | California      | US         |
+| 3  | New Jersey    | 2007 Zagora St        | 50090       | South Brunswick     | New Jersey      | US         |
+| 4  | Seattle       | 2004 Charade Rd       | 98199       | Seattle             | Washington      | US         |
+| 5  | Toronto       | 147 Spadina Ave       | M5V 2L7     | Toronto             | Ontario         | CA         |
+| 6  | Sydney        | 12-98 Victoria Street | 2901        | Sydney              | New South Wales | AU         |
+| 7  | Mexico City   | Mariano Escobedo 9991 | 11932       | Monterrey           | Nuevo León      | MX         |
+| 8  | Beijing       | 40-5-12 Laogianggen   | 190518      | Beijing             | Shenzhen        | CN         |
+| 9  | Bombay        | 1298 Vileparle (E)    | 490231      | Bombay              | Maharashtra     | IN         |
 
 </details>
-<br><br>
+<br><br><br>
 
 
 
-**TABLE: product**
+### TABLE: `product`
 
-**ISSUE:** confirm product ids are unique to name-description pairs by checking for duplicate name-description pairs
+⚠️ **ISSUE:** confirm product ids are unique to name-description pairs by checking for duplicate name-description pairs
 
-**ACTION:** check for duplicates using `ROW_NUMBER()`
+🛠️ **ACTION:** check for duplicates using `ROW_NUMBER()`
 
-* 1: partition name-description pairs with row_number() function, sort duplicates to top of list
+* **1:** partition name-description pairs with row_number() function, sort duplicates to top of list
 
 	```sql
-	SELECT				
-	 id,
-	 name,
-	 description,
-	 ROW_NUMBER() OVER(PARTITION BY name, description ORDER BY id) as rn
+	SELECT	id,
+ 		name,
+ 		description,
+ 		ROW_NUMBER() OVER(PARTITION BY name, description ORDER BY id) as rn
 	FROM product
 	ORDER BY
 		rn DESC,
@@ -402,16 +467,15 @@ FROM warehouse
 	```
 	
 
-* 2: use ctes to isolate duplicate name-description pairs in order to find all corresponding ids
+* **2:** use ctes to isolate duplicate name-description pairs in order to find all corresponding ids
 
 	```sql
 	---- first- cte returns full unique product id list w/ row numbers and duplicates sorted to the top
 	WITH row_cte AS (
-		SELECT				
-		 id,
-		 name,
-		 description,
-		 ROW_NUMBER() OVER(PARTITION BY name, description ORDER BY id) as rn
+		SELECT	id,
+ 			name,
+ 			description,
+ 			ROW_NUMBER() OVER(PARTITION BY name, description ORDER BY id) as rn
 		FROM product
 		ORDER BY
 			rn DESC,
@@ -426,8 +490,7 @@ FROM warehouse
 			)
 			
 	---- final query returns list of all duplicate name-description pairs w/ corresponding id, std_cost, and list_price
-	SELECT 
-		p.id,
+	SELECT	p.id,
 		p.name,
 		p.description,
 		p.std_cost,
@@ -457,8 +520,9 @@ FROM warehouse
 	
 <br><br>
  
-**ISSUE:** confirm all inventory table rows are unique
-**ACTION:** use row_number() to return any duplicate rows sorted to the top of the list
+⚠️ **ISSUE:** confirm all inventory table rows are unique
+
+🛠️ **ACTION:** use row_number() to return any duplicate rows sorted to the top of the list
 
 ```sql
 SELECT *, ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn
