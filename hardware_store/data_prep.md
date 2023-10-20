@@ -8,12 +8,17 @@ The dataset consists of 22 columns.
 | CATEGORY_ID | CATEGORY_NAME | PRODUCT_ID | PRODUCT_NAME | DESCRIPTION | DESCRIPTION - Detail 1 | DESCRIPTION - Detail 2 | DESCRIPTION - Detail 3 | DESCRIPTION - Detail 4 | STANDARD_COST | LIST_PRICE | COUNTRY_ID | REGION_ID | LOCATION_ID | WAREHOUSE_ID | QUANTITY | WAREHOUSE_NAME | ADDRESS | POSTAL_CODE | CITY | STATE | COUNTRY_NAME |
 |-------------|---------------|------------|--------------|-------------|------------------------|------------------------|------------------------|------------------------|---------------|------------|------------|-----------|-------------|--------------|----------|----------------|---------|-------------|------|-------|--------------|
 
+<br><br>
 
 <!-- uplaod dataset to new postgres database for cleaning, normalization, and analysis -->
 
 A postgres database was created on a local server with a `CREATE DATABASE` statement in order to store the inventory analysis project.
 
 Using the `.csv` column names, table `inventory_raw` was created to store the raw dataset.
+
+
+<details>
+	<summary><strong>View <code>CREATE TABLE</code> statement</strong></summary>
 
 ```sql
 CREATE TABLE inventory_raw (
@@ -39,14 +44,18 @@ CREATE TABLE inventory_raw (
 	CITY text,
 	STATE text,
 	COUNTRY_NAME text
-	);
+)
 ```
+</details>
+<br><br>
 
-
-Dataset was uploaded to `inventory_raw` with a psql `/copy` statement.
+The dataset was uploaded to `inventory_raw` with a psql `/copy` statement.
 
 `\copy inventory_raw FROM 'C:\Users\steve\portfolio_projects\hardware_store\hardwareStore.csv' DELIMITER ',' CSV HEADER;`
 
+<details>
+	<summary><strong>View Results Summary</strong></summary>
+	
 ```sql
 SELECT *
 FROM inventory_raw
@@ -61,7 +70,8 @@ LIMIT 5
 | 1           | CPU           | 8          | Intel Xeon E5-1650 V4            | Speed:3.6GHz/Cores:6/TDP:140W | Speed:3.6GHz  | Cores:6       | TDP:140W      | 0             | 535.47        | 601.99     | US         | 2         | 8           | 4            | 67       | SeattleWashington | 2004 Charade Rd       | 98199       | Seattle             | Washington      | United States of America |
 | 1           | CPU           | 72         | Intel Xeon E5-2630 V3 (OEM/Tray) | Speed:2.4GHz/Cores:8/TDP:85W  | Speed:2.4GHz  | Cores:8       | TDP:85W       | 0             | 421.9         | 589.99     | AU         | 3         | 13          | 6            | 35       | Sydney            | 12-98 Victoria Street | 2901        | Sydney              | New South Wales | Australia                |
 
-<br>
+</details>
+<br><br>
 
 The `inventory_raw` table was checked for duplicate rows using the `ROW_NUMBER()` window function.
 
@@ -71,7 +81,10 @@ FROM inventory_raw
 ORDER BY rn DESC
 ```
 
-**Results:**
+<details>
+	<summary><strong>View Results</strong></summary>
+
+</details>
 
 **No duplicates were found.**
 
