@@ -1,23 +1,20 @@
 # Introduction
-### Scenario: After a company wide inventory count, a computer hardware company requests a summary of its current inventory. The inventory is located at multiple international warehouses.
+### Scenario
+After a company wide inventory count, a computer hardware company is left with an inventory dataset that includes product information that includes part numbers, descriptions, and location information.  The products are distributed among its multiple international warehouses.
 
 The company stakeholders request a summary of the inventory dataset that includes the following:
 
 * confirmation that the inventory dataset includes all products and warehouses
-
 * total product *count* and *value*
 	* company-wide
 	* at each warehouse
- 
-* total product *count* and *value* of **each product category** w/ percentage of total
+* total product *count* and *value* of **each product category**
 	* company-wide
 	* at each warehouse
- 
-* product with highest gross value
+* product with **_highest gross value_**
 	* company-wide
 	* at each warehouse
-
-* most and least profitable product
+* **_most_** and **_least_** profitable product
 	* at each warehouse
 
 <br><br>
