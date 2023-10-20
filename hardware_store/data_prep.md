@@ -82,12 +82,11 @@ ORDER BY rn DESC
 ```
 
 <details>
-	<summary><strong>View Results</strong></summary>
+	<summary><strong>View Results</strong></summary><br>
+
+ **No duplicates were found.**
 
 </details>
-
-**No duplicates were found.**
-
 <br>
 
 <!-- start normalization process of new database -->
