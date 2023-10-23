@@ -114,7 +114,7 @@ ORDER BY ROUND((total_cost / SUM(total_cost) OVER()) * 100, 1) DESC
 ℹ️ **Company-wide**
  
 <details>
-	<summary><strong>View Results</strong></summary><br>
+	<summary><strong>View Query</strong></summary><br>
 
 ```sql
 WITH cat_cte AS(	
@@ -157,7 +157,7 @@ FROM cat_cte
 ℹ️ **At each warehouse**
 	
 <details>
-	<summary><strong>View Results</strong></summary><br>
+	<summary><strong>View Query</strong></summary><br>
 	
 ```sql
 WITH wh_cte AS (	
@@ -238,10 +238,10 @@ FROM wh_cte
  
 ## 📋 	Product with highest gross value
 
-ℹ️ **Company-wide**
+ℹ️ **Company-wide (Top 10 Results)**
 
 <details>
-	<summary><strong>View Top 10 Results</strong></summary><br>
+	<summary><strong>View Query</strong></summary><br>
 	
 ```sql
 SELECT	c.name,
@@ -283,7 +283,7 @@ LIMIT 10
 ℹ️ **At each warehouse**
 
 <details>
-	<summary><strong>View Results</strong></summary><br>
+	<summary><strong>View Query</strong></summary><br>
 	
 ```sql
 WITH gross_value_cte AS (
@@ -386,6 +386,9 @@ WHERE rank = 1
 
 ## 📋	Product **gross profit** and **rate of return**
 
+<details>
+	<summary><strong>View DDL Statement</strong></summary><br>
+
 ```sql
 CREATE TEMP TABLE products_ranked AS (
 	SELECT	c.name AS category,
@@ -414,16 +417,19 @@ CREATE TEMP TABLE products_ranked AS (
 		p.list_price - p.std_cost DESC
 	);
 ```
+</details>
+<br>
 
 <details>
-	<summary><strong>View Table Summary</strong></summary><br>
-	
+	<summary><strong>View Query</strong></summary><br>
+
 ```sql
 SELECT *
 FROM products_ranked
 LIMIT 5
 ;
 ```
+</details>
 <br>
 
 | category | product_id | product                          | gross_profit | profit_rank_hi | profit_rank_lo | gross_ror | ror_rnk_hi | ror_rnk_lo |
@@ -434,14 +440,13 @@ LIMIT 5
 | CPU      | 243        | Intel Xeon E5-2643 V4 (OEM/Tray) | 483.27       | 4              | 38             | 39.43     | 5          | 37         |
 | CPU      | 166        | Intel Xeon E5-2680 V3 (OEM/Tray) | 472.00       | 5              | 37             | 40.45     | 2          | 40         |
 
-</details>
 <br><br>
 
 
 ℹ️ **Products w/ highest/lowest *gross profit* by category**
 	
 <details>
-	<summary><strong>View Results</strong></summary><br>
+	<summary><strong>View Query</strong></summary><br>
 	
 ```sql
 WITH profit_hi_cte AS (
@@ -538,7 +543,7 @@ JOIN ror_lo_cte rl
 
 
 <details>
-	<summary><strong>View Results</strong></summary><br>
+	<summary><strong>View Query</strong></summary><br>
 	
 ```sql
 WITH profit_cte AS (
