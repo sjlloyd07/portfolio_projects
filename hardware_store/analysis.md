@@ -1,37 +1,9 @@
 # Analysis
 
-## 📋	Check that inventory count includes all products and warehouses.
-<br>
-
-<details>
-	<summary><strong>View Query</strong></summary><br>
-
-```sql
-SELECT	COUNT(DISTINCT i.product_id) AS unique_products_counted,
-	COUNT(DISTINCT p.id) AS unique_products_expected,
-	COUNT(DISTINCT i.warehouse_id) AS unique_wh_counted,
-	COUNT(DISTINCT w.id) AS unique_wh_expected
-FROM inventory i
-JOIN warehouse w
-	ON w.id = i.warehouse_id
-JOIN product p
-	ON p.id = i.product_id
-;
-```
-</details>
-
-| unique_products_counted | unique_products_expected | unique_wh_counted | unique_wh_expected |
-|-------------------------|--------------------------|-------------------|--------------------|
-| 208                     | 208                      | 9                 | 9                  |
-
-</details>
-<br><br>
-
-
 ## 📋	Total product ***count*** and ***value***.
 <br>
 
-ℹ️ **Company-wide**
+#### ℹ️ Company-wide
 	
 <details>
     <summary><strong>View Query</strong></summary><br>
@@ -54,7 +26,7 @@ ON i.product_id = p.id
 
 <br>
 
-ℹ️ **At each warehouse**
+#### ℹ️ At each warehouse
 	
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -109,9 +81,9 @@ ORDER BY ROUND((total_cost / SUM(total_cost) OVER()) * 100, 1) DESC
 
 
  
-## 📋	Total product ***count*** and ***value*** of **each product category** w/ percentage of total
+## 📋	Total product ***count*** and ***value*** of each product category
  
-ℹ️ **Company-wide**
+#### ℹ️ **Company-wide**
  
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -154,7 +126,7 @@ FROM cat_cte
 <br>
 
 
-ℹ️ **At each warehouse**
+#### ℹ️ **At each warehouse**
 	
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -236,9 +208,9 @@ FROM wh_cte
 
  
  
-## 📋 	Product with highest gross value
+## 📋 	Product with ***highest*** gross value
 
-ℹ️ **Company-wide (Top 10 Results)**
+#### ℹ️ **Company-wide (Top 10)**
 
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -248,7 +220,7 @@ SELECT	c.name,
 	p.id AS product_id,
 	p.name AS product,
 	SUM(i.quantity) AS gross_product_qty,
-	TO_CHAR(ROUND(SUM(i.quantity * p.std_cost),0), 'L999,999,999') AS gross_inv_value
+	TO_CHAR(ROUND(SUM(i.quantity * p.list_price),0), 'L999,999,999') AS gross_inv_val
 FROM product p
 JOIN inventory i
 	ON i.product_id = p.id
@@ -258,29 +230,30 @@ GROUP BY
 	c.name,
 	p.id,
 	p.name
-ORDER BY gross_inv_value DESC
+ORDER BY gross_inv_val DESC
 LIMIT 10
 ;
 ```
 </details>
 <br>
 
-| name       | product_id | product                          | gross_product_qty | gross_inv_value |
+| name       | product_id | product                          | gross_product_qty | gross_inv_val |
 |------------|------------|----------------------------------|-------------------|-----------------|
-| Video Card | 207        | PNY VCQM6000-PB                  | 1413              | $   3,539,622   |
-| Video Card | 133        | PNY VCQP6000-PB                  | 785               | $   3,186,307   |
-| Storage    | 50         | Intel SSDPECME040T401            | 360               | $   2,564,518   |
-| Video Card | 123        | ATI FirePro S9150                | 769               | $   2,020,978   |
-| Video Card | 110        | ATI FirePro W9000                | 725               | $   2,019,524   |
-| Video Card | 142        | AMD FirePro W9100                | 795               | $   1,974,287   |
-| Video Card | 245        | ATI FirePro S9050                | 1557              | $   1,926,071   |
-| Video Card | 105        | EVGA 12G-P4-3992-KR              | 715               | $   1,653,845   |
-| CPU        | 241        | Intel Xeon E5-2699 V4 (OEM/Tray) | 846               | $   1,299,135   |
-| CPU        | 242        | Intel Xeon E5-1680 V3 (OEM/Tray) | 846               | $   1,285,793   |
+| Video Card | 207 | PNY VCQM6000-PB                         | 1413 | $   4,599,301 |
+| Video Card | 133 | PNY VCQP6000-PB                         | 785  | $   4,317,492 |
+| Storage    | 50  | Intel SSDPECME040T401                   | 360  | $   3,192,476 |
+| Video Card | 245 | ATI FirePro S9050                       | 1557 | $   2,645,343 |
+| Video Card | 123 | ATI FirePro S9150                       | 769  | $   2,443,451 |
+| Video Card | 142 | AMD FirePro W9100                       | 795  | $   2,384,118 |
+| Video Card | 110 | ATI FirePro W9000                       | 725  | $   2,314,903 |
+| Video Card | 105 | EVGA 12G-P4-3992-KR                     | 715  | $   2,001,993 |
+| Video Card | 281 | Asus ROG-POSEIDON-GTX1080TI-P11G-GAMING | 1827 | $   1,580,318 |
+| Video Card | 4   | AMD 100-505989                          | 576  | $   1,555,194 |
+
 
 <br>
 
-ℹ️ **At each warehouse**
+#### ℹ️ **At each warehouse**
 
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -292,8 +265,8 @@ WITH gross_value_cte AS (
 		p.id AS product_id,
 		p.name AS product,
 		SUM(i.quantity) AS gross_product_qty,
-		TO_CHAR(ROUND(SUM(i.quantity * p.std_cost),0), 'L999,999,999') AS gross_product_value,
-		RANK() OVER(PARTITION BY w.name ORDER BY SUM(i.quantity * p.std_cost) DESC)
+		TO_CHAR(ROUND(SUM(i.quantity * p.list_price),0), 'L999,999,999') AS gross_product_value,
+		RANK() OVER(PARTITION BY w.name ORDER BY SUM(i.quantity * p.list_price) DESC)
 	FROM product p
 	JOIN inventory i
 		ON i.product_id = p.id
@@ -308,7 +281,7 @@ WITH gross_value_cte AS (
 		p.name
 	ORDER BY
 		w.name,
-		gross_product_value DESC
+		SUM(i.quantity * p.list_price) DESC
 	)
 
 SELECT	warehouse,
@@ -325,20 +298,20 @@ WHERE rank = 1
 
 | warehouse     | category   | product               | gross_product_qty | gross_product_value |
 |---------------|------------|-----------------------|-------------------|---------------------|
-| Beijing       | Video Card | PNY VCQM6000-PB       | 121               | $     303,110       |
-| Bombay        | Video Card | PNY VCQM6000-PB       | 109               | $     273,049       |
-| Mexico City   | Storage    | Intel SSDPECME040T401 | 58                | $     413,172       |
-| New Jersey    | Video Card | PNY VCQP6000-PB       | 136               | $     552,023       |
-| San Francisco | Storage    | Intel SSDPECME040T401 | 117               | $     833,468       |
-| Seattle       | Video Card | PNY VCQM6000-PB       | 169               | $     423,352       |
-| Southlake     | Video Card | PNY VCQP6000-PB       | 133               | $     539,846       |
-| Sydney        | Storage    | Intel SSDPECME040T401 | 84                | $     598,387       |
-| Toronto       | Storage    | Intel SSDPECME040T401 | 69                | $     491,533       |
+| Beijing       | Video Card | PNY VCQM6000-PB       | 121               | $     393,854       |
+| Bombay        | Video Card | PNY VCQM6000-PB       | 109               | $     354,794       |
+| Mexico City   | Storage    | Intel SSDPECME040T401 | 58                | $     514,343       |
+| New Jersey    | Video Card | PNY VCQP6000-PB       | 136               | $     747,999       |
+| San Francisco | Storage    | Intel SSDPECME040T401 | 117               | $   1,037,555       |
+| Seattle       | Video Card | PNY VCQP6000-PB       | 104               | $     571,999       |
+| Southlake     | Video Card | PNY VCQP6000-PB       | 133               | $     731,499       |
+| Sydney        | Storage    | Intel SSDPECME040T401 | 84                | $     744,911       |
+| Toronto       | Storage    | Intel SSDPECME040T401 | 69                | $     611,891       |
 
 <br>
 
 
-ℹ️ **In each category**
+#### ℹ️ **In each category**
 
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -349,8 +322,8 @@ WITH gross_value_cte AS (
 		p.id AS product_id,
 		p.name AS product,
 		SUM(i.quantity) AS gross_product_qty,
-		TO_CHAR(ROUND(SUM(i.quantity * p.std_cost),0), 'L999,999,999') AS gross_product_value,
-		RANK() OVER(PARTITION BY c.name ORDER BY SUM(i.quantity * p.std_cost) DESC)
+		TO_CHAR(ROUND(SUM(i.quantity * p.list_price),0), 'L999,999,999') AS gross_product_value,
+		RANK() OVER(PARTITION BY c.name ORDER BY SUM(i.quantity * p.list_price) DESC)
 	FROM product p
 	JOIN inventory i
 		ON i.product_id = p.id
@@ -360,7 +333,7 @@ WITH gross_value_cte AS (
 		c.name,
 		p.id,
 		p.name
-	ORDER BY gross_product_value DESC
+	ORDER BY SUM(i.quantity * p.list_price) DESC
 	)
 
 SELECT	category,
@@ -376,15 +349,16 @@ WHERE rank = 1
 
 | category     | product                          | gross_product_qty | gross_product_value |
 |--------------|----------------------------------|-------------------|---------------------|
-| Video Card   | PNY VCQM6000-PB                  | 1413              | $   3,539,622       |
-| Storage      | Intel SSDPECME040T401            | 360               | $   2,564,518       |
-| CPU          | Intel Xeon E5-2699 V4 (OEM/Tray) | 846               | $   1,299,135       |
-| Mother Board | Supermicro X10SDV-8C-TLN4F       | 825               | $     548,039       |
+| Video Card   | PNY VCQM6000-PB                  | 1413              | $   4,599,301       |
+| Storage      | Intel SSDPECME040T401            | 360               | $   3,192,476       |
+| CPU          | Intel Xeon E5-2699 V4 (OEM/Tray) | 846               | $   1,485,576       |
+| Mother Board | Supermicro X10SDV-8C-TLN4F       | 825               | $     782,917       |
+
 
 <br><br>
 
 
-## 📋	Product **gross profit** and **rate of return**
+## 📋	**Gross profit** and **rate of return**
 
 <details>
 	<summary><strong>View DDL Statement</strong></summary><br>
@@ -443,7 +417,7 @@ LIMIT 5
 <br><br>
 
 
-ℹ️ **Products w/ highest/lowest *gross profit* by category**
+#### ℹ️ **Highest & lowest *gross profit* by category**
 	
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -469,9 +443,9 @@ profit_lo_cte AS (
 	)
 
 SELECT	ph.category,
-	ph.product AS product_gross_profit_hi,
+	ph.product AS product_gross_profit_highest,
 	ph.profit_per_unit,
-	pl.product AS product_gross_profit_lo,
+	pl.product AS product_gross_profit_lowest,
 	pl.profit_per_unit
 FROM profit_hi_cte ph
 JOIN profit_lo_cte pl
@@ -481,7 +455,7 @@ JOIN profit_lo_cte pl
 </details>
 <br>
 
-| category     | product_gross_profit_hi          | profit_per_unit  | product_gross_profit_lo     | profit_per_unit-2 |
+| category     | product_gross_profit_highest     | profit_per_unit  | product_gross_profit_lowest | profit_per_unit-2 |
 |--------------|----------------------------------|------------------|-----------------------------|-------------------|
 | Storage      | Intel SSDPECME040T401            | $       1,744.33 | Western Digital WD2500AAJS  | $           1.76  |
 | Video Card   | PNY VCQP6000-PB                  | $       1,441.00 | MSI GTX 1080 TI AERO 11G OC | $          82.54  |
@@ -491,7 +465,7 @@ JOIN profit_lo_cte pl
 <br><br>
 
  
-ℹ️ **Products w/ highest/lowest *rate of return* by category** 
+#### ℹ️ **Highest / lowest *rate of return* by category** 
 
 <details>
 	<summary><strong>View Query</strong></summary><br>
