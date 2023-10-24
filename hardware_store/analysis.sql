@@ -170,6 +170,26 @@
 
 
 
+---- highest priced products (top 5)
+-- SELECT
+-- 	c.name,
+-- 	p.id AS product_id,
+-- 	p.name AS product,
+-- 	TO_CHAR(p.list_price, 'L999,999,999D99') AS list_price
+-- FROM product p
+-- JOIN inventory i
+-- 	ON i.product_id = p.id
+-- JOIN category c
+-- 	ON c.id = p.category_id
+-- GROUP BY 
+-- 	c.name,
+-- 	p.id,
+-- 	p.name
+-- ORDER BY
+-- 	p.list_price DESC
+-- LIMIT 5
+--;
+
 
 
 
