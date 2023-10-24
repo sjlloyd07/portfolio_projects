@@ -22,7 +22,7 @@ The **San Francisco warehouse** holds the most inventory - [over 28,000 pieces w
 
 The **storage** category of products has the most items - [47,000 pieces with a total list value of $27 million](/hardware_store/analysis.md#%E2%84%B9%EF%B8%8F-company-wide-1). But the **video card** category has fewer items - 39,000 - and a list value of almost double that of storage - $50 million. [Video card products have highest gross asset value at almost every warehouse](/hardware_store/analysis.md#%E2%84%B9%EF%B8%8F-at-each-warehouse-1) and have the _highest_ share of gross asset value at the **Southlake warehouse** with **98%** of gross product value there.
 
-
+[Three of the top 5 highest priced company products are video cards](), but a storage product - the _Intel SSDPECME040T401_ - is the number one highest priced item - listed at over $8,000.00 - and is 60% more expensive than the next highest priced item.
 
 
 <!-- create interactive dashboard w/ tableau -->
