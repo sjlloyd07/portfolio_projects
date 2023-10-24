@@ -206,8 +206,46 @@ FROM wh_cte
 
 <br><br> 
 
- 
- 
+
+## 📋	Highest priced company products
+
+#### ℹ️ Top 5
+
+<details>
+	<summary><strong>View Query</strong></summary><br>
+	
+```sql
+SELECT	c.name,
+	p.id AS product_id,
+	p.name AS product,
+	TO_CHAR(p.list_price, 'L999,999,999D99') AS list_price
+FROM product p
+JOIN inventory i
+	ON i.product_id = p.id
+JOIN category c
+	ON c.id = p.category_id
+GROUP BY
+	c.name,
+	p.id,
+	p.name
+ORDER BY p.list_price DESC
+LIMIT 5
+;
+```
+</details>
+<br>
+
+| name       | product_id | product                          | list_price       |
+|------------|------------|----------------------------------|-----------------:|
+| Storage    | 50         | Intel SSDPECME040T401            | $       8,867.99 |
+| Video Card | 133        | PNY VCQP6000-PB                  | $       5,499.99 |
+| CPU        | 228        | Intel Xeon E5-2699 V3 (OEM/Tray) | $       3,410.46 |
+| Video Card | 207        | PNY VCQM6000-PB                  | $       3,254.99 |
+| Video Card | 110        | ATI FirePro W9000                | $       3,192.97 |
+
+<br><br>
+
+
 ## 📋 	Product with ***highest*** gross value
 
 #### ℹ️ **Company-wide (Top 10)**
