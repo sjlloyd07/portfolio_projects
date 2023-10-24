@@ -179,7 +179,7 @@
 -- 	p.id AS product_id,
 -- 	p.name AS product,
 -- 	SUM(i.quantity) AS gross_product_qty,
--- 	TO_CHAR(ROUND(SUM(i.quantity * p.std_cost),0), 'L999,999,999') AS gross_inv_value
+--  TO_CHAR(ROUND(SUM(i.quantity * p.list_price),0), 'L999,999,999') AS gross_inv_val
 -- FROM product p
 -- JOIN inventory i
 -- 	ON i.product_id = p.id
@@ -190,7 +190,7 @@
 -- 	p.id,
 -- 	p.name
 -- ORDER BY
--- 	gross_inv_value DESC
+-- 	gross_inv_val DESC
 -- LIMIT 10
 
 
@@ -204,8 +204,8 @@
 -- 		p.id AS product_id,
 -- 		p.name AS product,
 -- 		SUM(i.quantity) AS gross_product_qty,
--- 		TO_CHAR(ROUND(SUM(i.quantity * p.std_cost),0), 'L999,999,999') AS gross_product_value,
--- 		RANK() OVER(PARTITION BY w.name ORDER BY SUM(i.quantity * p.std_cost) DESC)
+-- 		TO_CHAR(ROUND(SUM(i.quantity * p.list_price),0), 'L999,999,999') AS gross_product_value,
+-- 		RANK() OVER(PARTITION BY w.name ORDER BY SUM(i.quantity * p.list_price) DESC)
 -- 	FROM product p
 -- 	JOIN inventory i
 -- 		ON i.product_id = p.id
@@ -220,7 +220,7 @@
 -- 		p.name
 -- 	ORDER BY
 -- 		w.name,
--- 		gross_product_value DESC
+-- 		SUM(i.quantity * p.list_price) DESC
 -- 	)
 
 -- SELECT
@@ -233,8 +233,7 @@
 -- WHERE rank = 1
 
 
-
-
+  
 
 
 ---- * product with highest gross value in each category
@@ -244,8 +243,8 @@
 -- 		p.id AS product_id,
 -- 		p.name AS product,
 -- 		SUM(i.quantity) AS gross_product_qty,
--- 		TO_CHAR(ROUND(SUM(i.quantity * p.std_cost),0), 'L999,999,999') AS gross_product_value,
--- 		RANK() OVER(PARTITION BY c.name ORDER BY SUM(i.quantity * p.std_cost) DESC)
+-- 		TO_CHAR(ROUND(SUM(i.quantity * p.list_price),0), 'L999,999,999') AS gross_product_value,
+-- 		RANK() OVER(PARTITION BY c.name ORDER BY SUM(i.quantity * p.list_price) DESC)
 -- 	FROM product p
 -- 	JOIN inventory i
 -- 		ON i.product_id = p.id
@@ -256,7 +255,7 @@
 -- 		p.id,
 -- 		p.name
 -- 	ORDER BY
--- 		gross_product_value DESC
+-- 		SUM(i.quantity * p.list_price) DESC
 -- 	)
 
 -- SELECT
