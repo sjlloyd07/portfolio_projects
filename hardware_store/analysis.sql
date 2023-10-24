@@ -297,10 +297,10 @@
 -- 		c.name AS category,
 -- 		p.id AS product_id,
 -- 		p.name AS product,
--- 		p.list_price - p.std_cost AS gross_profit,
+-- 		p.list_price - p.std_cost AS net_profit,
 -- 		RANK() OVER(PARTITION BY c.name ORDER BY p.list_price - p.std_cost DESC) AS profit_rank_hi,
 -- 		RANK() OVER(PARTITION BY c.name ORDER BY p.list_price - p.std_cost) AS profit_rank_lo,
--- 		ROUND(((p.list_price - p.std_cost) / p.std_cost) * 100, 2) AS gross_ror,
+-- 		ROUND(((p.list_price - p.std_cost) / p.std_cost) * 100, 2) AS ror,
 -- 		RANK() OVER(PARTITION BY c.name ORDER BY (p.list_price - p.std_cost) / p.std_cost DESC) AS ror_rnk_hi,
 -- 		RANK() OVER(PARTITION BY c.name ORDER BY (p.list_price - p.std_cost) / p.std_cost) AS ror_rnk_lo
 
@@ -333,27 +333,27 @@
 -- 		category,
 -- 		product,
 -- 		product_id,
--- 		TO_CHAR(gross_profit, 'L999,999,999D99') AS profit_per_unit 
+-- 		TO_CHAR(net_profit, 'L999,999,999D99') AS profit_per_unit 
 -- 	FROM products_ranked 
 -- 	WHERE profit_rank_hi = 1
--- 	ORDER BY profit_per_unit DESC
+-- 	ORDER BY net_profit DESC
 -- 	),
 -- profit_lo_cte AS (
 -- 	SELECT
 -- 		category,
 -- 		product,
 -- 		product_id,
--- 		TO_CHAR(gross_profit, 'L999,999,999D99') AS profit_per_unit 
+-- 		TO_CHAR(net_profit, 'L999,999,999D99') AS profit_per_unit 
 -- 	FROM products_ranked 
 -- 	WHERE profit_rank_lo = 1
--- 	ORDER BY profit_per_unit
+-- 	ORDER BY net_profit
 -- 	)
 
 -- SELECT
 -- 	ph.category,
--- 	ph.product AS product_gross_profit_hi,
+-- 	ph.product AS product_net_profit_hi,
 -- 	ph.profit_per_unit,
--- 	pl.product AS product_gross_profit_lo,
+-- 	pl.product AS product_net_profit_lo,
 -- 	pl.profit_per_unit
 
 -- FROM profit_hi_cte ph
@@ -368,7 +368,7 @@
 -- 		category,
 -- 		product,
 -- 		product_id,
--- 		gross_ror || ' %' AS rate_of_return 
+-- 		ror || ' %' AS rate_of_return 
 -- 	FROM products_ranked 
 -- 	WHERE ror_rnk_hi = 1
 -- 	),
@@ -377,7 +377,7 @@
 -- 		category,
 -- 		product,
 -- 		product_id,
--- 		gross_ror || ' %' AS rate_of_return 
+-- 		ror || ' %' AS rate_of_return 
 -- 	FROM products_ranked 
 -- 	WHERE ror_rnk_lo = 1
 -- 	)
