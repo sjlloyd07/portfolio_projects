@@ -396,7 +396,7 @@ WHERE rank = 1
 <br><br>
 
 
-## 📋	**Gross profit** and **rate of return**
+## 📋	**Net profit** and **rate of return**
 
 <details>
 	<summary><strong>View DDL Statement</strong></summary><br>
@@ -406,10 +406,10 @@ CREATE TEMP TABLE products_ranked AS (
 	SELECT	c.name AS category,
 		p.id AS product_id,
 		p.name AS product,
-		p.list_price - p.std_cost AS gross_profit,
+		p.list_price - p.std_cost AS net_profit,
 		RANK() OVER(PARTITION BY c.name ORDER BY p.list_price - p.std_cost DESC) AS profit_rank_hi,
 		RANK() OVER(PARTITION BY c.name ORDER BY p.list_price - p.std_cost) AS profit_rank_lo,
-		ROUND(((p.list_price - p.std_cost) / p.std_cost) * 100, 2) AS gross_ror,
+		ROUND(((p.list_price - p.std_cost) / p.std_cost) * 100, 2) AS ror,
 		RANK() OVER(PARTITION BY c.name ORDER BY (p.list_price - p.std_cost) / p.std_cost DESC) AS ror_rnk_hi,
 		RANK() OVER(PARTITION BY c.name ORDER BY (p.list_price - p.std_cost) / p.std_cost) AS ror_rnk_lo
 
@@ -455,7 +455,7 @@ LIMIT 5
 <br><br>
 
 
-#### ℹ️ **Highest & lowest *gross profit* by category**
+#### ℹ️ **Highest & lowest product *net profit* by category**
 	
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -465,25 +465,25 @@ WITH profit_hi_cte AS (
 	SELECT	category,
 		product,
 		product_id,
-		TO_CHAR(gross_profit, 'L999,999,999D99') AS profit_per_unit 
+		TO_CHAR(net_profit, 'L999,999,999D99') AS profit_per_unit 
 	FROM products_ranked 
 	WHERE profit_rank_hi = 1
-	ORDER BY profit_per_unit DESC
+	ORDER BY net_profit DESC
 	),
 profit_lo_cte AS (
 	SELECT	category,
 		product,
 		product_id,
-		TO_CHAR(gross_profit, 'L999,999,999D99') AS profit_per_unit 
+		TO_CHAR(net_profit, 'L999,999,999D99') AS profit_per_unit 
 	FROM products_ranked 
 	WHERE profit_rank_lo = 1
-	ORDER BY profit_per_unit
+	ORDER BY net_profit
 	)
 
 SELECT	ph.category,
-	ph.product AS product_gross_profit_highest,
+	ph.product AS product_net_profit_highest,
 	ph.profit_per_unit,
-	pl.product AS product_gross_profit_lowest,
+	pl.product AS product_net_profit_lowest,
 	pl.profit_per_unit
 FROM profit_hi_cte ph
 JOIN profit_lo_cte pl
@@ -493,7 +493,7 @@ JOIN profit_lo_cte pl
 </details>
 <br>
 
-| category     | product_gross_profit_highest     | profit_per_unit  | product_gross_profit_lowest | profit_per_unit-2 |
+| category     | product_net_profit_highest       | profit_per_unit  | product_net_profit_lowest   | profit_per_unit-2 |
 |--------------|----------------------------------|------------------|-----------------------------|-------------------|
 | Storage      | Intel SSDPECME040T401            | $       1,744.33 | Western Digital WD2500AAJS  | $           1.76  |
 | Video Card   | PNY VCQP6000-PB                  | $       1,441.00 | MSI GTX 1080 TI AERO 11G OC | $          82.54  |
@@ -503,7 +503,7 @@ JOIN profit_lo_cte pl
 <br><br>
 
  
-#### ℹ️ **Highest / lowest *rate of return* by category** 
+#### ℹ️ **Highest / lowest product *rate of return* by category** 
 
 <details>
 	<summary><strong>View Query</strong></summary><br>
@@ -513,7 +513,7 @@ WITH ror_hi_cte AS (
 	SELECT	category,
 		product,
 		product_id,
-		gross_ror || ' %' AS rate_of_return 
+		ror || ' %' AS rate_of_return 
 	FROM products_ranked 
 	WHERE ror_rnk_hi = 1
 	),
@@ -521,7 +521,7 @@ ror_lo_cte AS (
 	SELECT	category,
 		product,
 		product_id,
-		gross_ror || ' %' AS rate_of_return 
+		ror || ' %' AS rate_of_return 
 	FROM products_ranked 
 	WHERE ror_rnk_lo = 1
 	)
