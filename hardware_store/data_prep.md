@@ -1,7 +1,7 @@
 # Preparation 
-The computer hardware store inventory dataset is stored in a `.csv` file that was downloaded to local storage. Microsoft Excel was utilized for initial data inspection. PostgreSQL was utilized for cleaning, manipulation, and analysis.
+The computer hardware store inventory dataset is stored in a `.csv` file that was downloaded to local storage. 
 
-The raw dataset consists of **22** columns. 
+Initial data inspection utilizing **Microsoft Excel** revealed that the raw dataset consisted of **22** columns - isolated below.
 
 <!-- column names -->
 | CATEGORY_ID | CATEGORY_NAME | PRODUCT_ID | PRODUCT_NAME | DESCRIPTION | DESCRIPTION - Detail 1 | DESCRIPTION - Detail 2 | DESCRIPTION - Detail 3 | DESCRIPTION - Detail 4 | STANDARD_COST | LIST_PRICE | COUNTRY_ID | REGION_ID | LOCATION_ID | WAREHOUSE_ID | QUANTITY | WAREHOUSE_NAME | ADDRESS | POSTAL_CODE | CITY | STATE | COUNTRY_NAME |
@@ -10,6 +10,7 @@ The raw dataset consists of **22** columns.
 <br><br>
 
 <!-- uplaod dataset to new postgres database for cleaning, normalization, and analysis -->
+**PostgreSQL** was utilized for cleaning, manipulation, and analysis of the dataset via **pgAdmin**.
 
 A postgres database was created on a local server with a `CREATE DATABASE` statement in order to store the inventory analysis project.
 
@@ -43,12 +44,12 @@ CREATE TABLE inventory_raw (
 	CITY text,
 	STATE text,
 	COUNTRY_NAME text
-)
+);
 ```
 </details>
 <br><br>
 
-The dataset was uploaded to table `inventory_raw` with a psql `/copy` statement.
+The dataset was copied to database table `inventory_raw` with a PSQL `/copy` statement.
 
 `\copy inventory_raw FROM 'C:\Users\steve\portfolio_projects\hardware_store\hardwareStore.csv' DELIMITER ',' CSV HEADER;`
 
@@ -59,6 +60,7 @@ The dataset was uploaded to table `inventory_raw` with a psql `/copy` statement.
 SELECT *
 FROM inventory_raw
 LIMIT 5
+;
 ```
 
 | category_id | category_name | product_id | product_name                     | description                   | description_1 | description_2 | description_3 | description_4 | standard_cost | list_price | country_id | region_id | location_id | warehouse_id | quantity | warehouse_name    | address               | postal_code | city                | state           | country_name             |
@@ -72,12 +74,13 @@ LIMIT 5
 </details>
 <br><br>
 
-The `inventory_raw` table was checked for duplicate rows using the `ROW_NUMBER()` window function.
+The `inventory_raw` table was checked for duplicate rows using the `ROW_NUMBER()` window function and partitioning the rows by known row identifiers - `product_id` and `warehouse_id`. This returns a row number value of **1** for every unique row and **2** if that row is a duplicate.
 
 ```sql
 SELECT ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn, *	
 FROM inventory_raw
 ORDER BY rn DESC
+;
 ```
 
 <details>
@@ -96,10 +99,10 @@ ORDER BY rn DESC
  **No duplicates were found.**
 
 </details>
-<br>
+<br><br>
 
 <!-- start normalization process of new database -->
-At this point, steps were taken to normalize the raw dataset in order to maintain data integrity and avoid redundancy.
+At this point, steps were taken to normalize the raw dataset into 3rd normal form.  This is done in order to maintain data integrity and avoid redundancy in the dataset, as well as make the data easier to work with in analysis.
 
 <br><br>
 
@@ -233,7 +236,8 @@ INSERT INTO product(id, name, description, std_cost, list_price, category_id)
 ```sql
 SELECT * 
 FROM product 
-LIMIT 5;
+LIMIT 5
+;
 ```
 
 | id | name                  | description                                               | std_cost | list_price | category_id |
@@ -407,7 +411,7 @@ SET name =
 
 ⚠️ **ISSUE:** `state` column - Mexican state name has character encoding error
 
-🛠️ **ACTION:** fix Mexican state character encoding with `REPLACE()`
+🛠️ **ACTION:** investigation of source data reveals the correct ASCII character replacement; fix wrongly encoded Mexican state character with `REPLACE()`
 
 <br>
 
@@ -452,7 +456,7 @@ FROM warehouse
 
 🛠️ **ACTION:** check for duplicates using `ROW_NUMBER()`
 
-* **1:** partition name-description pairs with row_number() function, sort duplicates to top of list
+* **1:** partition name-description pairs with `ROW_NUMBER()` function, sort duplicates (rn >= 2) to top of list
 
 	```sql
 	SELECT	id,
@@ -464,10 +468,11 @@ FROM warehouse
 		rn DESC,
 		name,
 		description
+ 	;
 	```
 	
 
-* **2:** use ctes to isolate duplicate name-description pairs in order to find all corresponding ids
+* **2:** use CTEs to isolate duplicate name-description pairs in order to find all corresponding ids
 
 	```sql
 	---- first- cte returns full unique product id list w/ row numbers and duplicates sorted to the top
@@ -511,6 +516,7 @@ FROM warehouse
 		p.name,
 		p.description,
 		p.id
+ 	;
 	```
 	
 	
@@ -522,12 +528,13 @@ FROM warehouse
  
 ⚠️ **ISSUE:** confirm all inventory table rows are unique
 
-🛠️ **ACTION:** use row_number() to return any duplicate rows sorted to the top of the list
+🛠️ **ACTION:** use `ROW_NUMBER()` to return any duplicate rows (rn >= 2) sorted to the top of the list
 
 ```sql
 SELECT *, ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn
 FROM inventory
 ORDER BY rn DESC
+;
 ```
 
 **NO RESULTS**	
