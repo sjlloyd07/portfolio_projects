@@ -1,6 +1,9 @@
 # Preparation 
 The computer hardware store inventory dataset is stored in a `.csv` file that was downloaded to local storage. 
 
+<br>
+
+### Inspection and upload
 Initial data inspection utilizing **Microsoft Excel** revealed that the raw dataset consisted of **22** columns - isolated below.
 
 <!-- column names -->
@@ -74,7 +77,7 @@ LIMIT 5
 </details>
 <br><br>
 
-The `inventory_raw` table was checked for duplicate rows using the `ROW_NUMBER()` window function and partitioning the rows by known row identifiers - `product_id` and `warehouse_id`. This returns a row number value of **1** for every unique row and **2** if that row is a duplicate.
+The `inventory_raw` table was checked for duplicate rows using the `ROW_NUMBER()` window function and partitioning the rows by known row identifiers - `product_id`, `warehouse_id`, and `quantity`. This returns a row number value of **1** for every unique row and **2** if that row is a duplicate.
 
 ```sql
 SELECT ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn, *	
