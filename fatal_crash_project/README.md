@@ -72,7 +72,6 @@ The same tools were utilized and intitial examinations performed during [prepara
 Analysis was performed on a dataset containing **33,487** NHTSA fatal accident records; each record represents one accident in which at least one fatality occurred.  These accidents resulted in almost [100](/fatal_crash_project/analysis.md#%E2%84%B9%EF%B8%8F-total-number-of-accidents-and-resulting-fatalities) fatalities per day - a total of **36,355** for the year.
 
 
-
 ### Over the Year
 Examination of [how traffic fatalities were distributed over the year](/fatal_crash_project/analysis.md#%E2%84%B9%EF%B8%8F-accident-fatalities-per-month) reveals that the summer months **July, August,** and **September** had the ***most*** fatalities, and the winter months **January, February,** and **March** had the ***least***. The month with the most fatalities - **August** - had ***40%*** more fatalities than the month with the least - **February**.
 
@@ -101,6 +100,11 @@ The three states with the highest populations in the most recent (2020) census  
 
 
 Additional information regarding accident fatallities and population can be examined by comparing the [number of fatalities per 100,000 residents](/fatal_crash_project/analysis.md#%E2%84%B9%EF%B8%8F-accident-fatalities-per-100000-residents) in a state. This calculation reveals that the least populous state - **Wyoming** - had **25.5** fataliites per 100,000 residents - the ***most*** of any state and **17.5%** more than the next most on the list. The **District of Columbia** had the ***least*** - **3.3**.
+
+<br>
+
+### 🖼️ (https://public.tableau.com/app/profile/steve.lloyd/viz/nhtsa/Dashboard22)
+
 
 <br>
 
