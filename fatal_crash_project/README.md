@@ -24,6 +24,7 @@ This analysis seeks to provide answers to the following:
 ### ℹ️ [Data Source](#data-source)
 ### 🧹 [Data Prep & Cleaning](#data-preparation--cleaning)
 ### 📝 [Analysis](#analysis)
+### 🎨 [Dashboard](#click-image-to-go-to-interactive-dash)
 ### 🏁 [Conclusion](#conclusion)
 
 
@@ -103,8 +104,11 @@ Additional information regarding accident fatallities and population can be exam
 
 <br>
 
-### 🖼️ (https://public.tableau.com/app/profile/steve.lloyd/viz/nhtsa/Dashboard22)
+### Click image to go to interactive dash
 
+<a href="https://public.tableau.com/views/nhtsa/Dashboard22?:language=en-US&:display_count=n&:origin=viz_share_link">
+  <img src="./images/nhtsa_dash.png?raw=true">
+</a>
 
 <br>
 
