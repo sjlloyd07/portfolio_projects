@@ -20,6 +20,15 @@ This analysis seeks to provide answers to the following:
 
 <br>
 
+### Jump to...
+### ℹ️ [Data Source](#data-source)
+### 🧹 [Data Prep & Cleaning](#data-preparation--cleaning)
+### 📝 [Analysis](#analysis)
+### 🏁 [Conclusion](#conclusion)
+
+
+<br>
+
 > The scope of this project is limited to the NHTSA *fatal* accident dataset, and therefore, all occurences of *accident(s)* in this analysis refer to records in this dataset. 
 
 <br>
