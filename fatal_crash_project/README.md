@@ -1,6 +1,13 @@
 # NHTSA Traffic Accident Fatality Report Analysis
 
-Every year, the National Highway Traffic & Safety Administration (NHTSA) composes an amalgamation of traffic accident fatality data collected from transportation and law enforcement agencies all over the United States as reported by the [Fatality Analysis Reporting System (FARS)](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813417#page=6). The data consists of crash characteristics that include location, time, vehicle description, persons involved, and environmental factors of traffic accidents that resulted in fatalities during the year. This project will perform an exploratory analysis on the NHTSA accident fatality data from 2019 in order to showcase the relationship between total numbers of fatalities, chronology, and location of each accident. The state population density in which accidents occurred will also be taken into consideration. The scope of this project is limited to the NHTSA *fatal* accident dataset, and therefore, all occurences of *accident(s)* in this analysis refer to records in this dataset. The population data was collected from the U.S. Census Bureau. 
+Every year, the National Highway Traffic & Safety Administration (NHTSA) collects traffic accident fatality data from transportation and law enforcement agencies all over the United States as reported by the [Fatality Analysis Reporting System (FARS)](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813417#page=6). This amalgamation of reported data contains information such as location, time, persons involved, and environmental factors of each traffic accident that resulted in at least one fatality over the year. 
+
+This case study will perform an exploratory analysis on the NHTSA accident fatality data from 2019 in order to showcase accident frequency as related to time and location over the year. 
+
+The state population density in which accidents occurred will also be taken into consideration. 
+
+
+<br>
 
 This analysis seeks to provide answers to the following:
 * How many accidents and resulting fatalities occurred during the year?
@@ -10,6 +17,10 @@ This analysis seeks to provide answers to the following:
 * What times during the average week were associated with increased numbers of accidents?
 * Does the time the most accidents occur differ significantly for rural and urban environments?
 * Does environmental lighting affect the number of accidents for rural and urban environments?
+
+<br>
+
+> The scope of this project is limited to the NHTSA *fatal* accident dataset, and therefore, all occurences of *accident(s)* in this analysis refer to records in this dataset. 
 
 <br>
 
@@ -26,7 +37,7 @@ The [FARS user manual](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublicati
 
 The FARS user manual defines the `ST_CASE` data element as a [case identifier unique to each row](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813417#page=38). 
 
-The analysis will also utilize publicly available United States population census data available for download at [data.census.gov](https://data.census.gov/table?q=population&g=010XX00US$0600000&tid=DECENNIALPL2020.P1).
+The analysis will also utilize publicly available United States population census data provided by the U.S. Census Bureau and available for download at [data.census.gov](https://data.census.gov/table?q=population&g=010XX00US$0600000&tid=DECENNIALPL2020.P1).
 
 <br>
 
