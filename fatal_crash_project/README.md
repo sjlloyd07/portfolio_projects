@@ -38,7 +38,7 @@ This analysis seeks to provide answers to the following:
 
 <br>
 
-## Data Source
+# Data Source
 
 The project utilizes publicly available NHTSA data in the `accident` data file which can be found in the [FARS 2019 National zip file](https://static.nhtsa.gov/nhtsa/downloads/FARS/2019/National/FARS2019NationalCSV.zip). 
 
@@ -55,7 +55,7 @@ The analysis will also utilize publicly available United States population censu
 
 <br>
 
-## Data Preparation & Cleaning
+# Data Preparation & Cleaning
 
 Tools utilized for ***NHTSA Accident data*** [preparation](/fatal_crash_project/data_prep.md#-preparation) and [cleaning](/fatal_crash_project/data_prep.md#-cleaning) include Microsoft Excel and PostgreSQL. Initial examination and necessary alterations of the data elements were performed with Excel in order to extract the appropriate information to upload into a PostgreSQL database with accuracy.
 
