@@ -11,7 +11,7 @@
 ###  Webscraping  
 |  Project  |  Description  |
 |  ---  |  ---  |
-|  -  |  -  |
+|  [craigslist scraper](/craigslist_scraper)  |  scrape all current listings from a predefined craigslist category page  |
 |  -  |  -  |
 <br>
 
