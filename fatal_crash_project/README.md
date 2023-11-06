@@ -2,7 +2,7 @@
 
 Every year, the National Highway Traffic & Safety Administration (NHTSA) collects traffic accident fatality data from transportation and law enforcement agencies all over the United States as reported by the [Fatality Analysis Reporting System (FARS)](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813417#page=6). This amalgamation of reported data contains information such as location, time, persons involved, and environmental factors of each traffic accident that resulted in at least one fatality over the year. 
 
-This case study will perform an exploratory analysis on the NHTSA accident fatality data from 2019 in order to showcase accident frequency as related to time and location over the year. 
+This case study will perform an analysis on the NHTSA accident fatality data from 2019 in order to showcase accident frequency as related to time and location over the year. 
 
 The state population density in which accidents occurred will also be taken into consideration. 
 
