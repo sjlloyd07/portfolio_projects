@@ -1,18 +1,21 @@
 
-## Data analysis projects
+# Data analysis projects
 
-|  Project  |  Description  | Skills |
-|---|  --- | - |
-|  [NHTSA Fatal Crash Analysis](/fatal_crash_project)  | Analysis of traffic accidents with fatalities in 2019 | <li>SQL</li> <li>Data Visualization</li> |
-| [Computer Store Inventory Analysis](hardware_store) | Analysis of computer store inventory | <li>Database design</li> <li>SQL</li> |
-| [Cyclistic Analysis](/google_capstone) | Google Data Analytics course capstone project | <li>Excel</li> <li>Data Visualization</li> |
+|  Project  |  Description  | Skills | Tools |
+|---|  --- | - | - |
+|  [NHTSA Fatal Crash Analysis](/fatal_crash_project)  | Analysis of traffic accidents with fatalities in 2019 | <li>EDA</li> <li>Ad-hoc Reporting</li> <li>Data Visualization</li> | <li>PostgreSQL</li> <li>Tableau</li> <li>Microsoft Excel</li> |
+| [Computer Store Inventory Analysis](hardware_store) | Analysis of computer store inventory | <li>EDA</li> <li>Database design</li> <li>Data modeling</li> | <li>PostgreSQL</li> |
+| [Cyclistic Analysis](/google_capstone) | Google Data Analytics course capstone project | <li>EDA</li> <li>Data cleaning</li> <li>Data Visualization</li> | <li>Microsoft Excel</li> <li>Python</li> |
 <br>
 
+***
+
+# Additional Skills
 ###  Webscraping  
-|  Project  |  Description  |
-|  ---  |  ---  |
-|  [craigslist scraper](/craigslist_scraper)  |  scrape all current listings from a predefined craigslist category page  |
-|  -  |  -  |
+|  Project  |  Description  | Tools |
+| - | - | - |
+|  [craigslist scraper](/craigslist_scraper)  |  save all current listings in a craigslist category to a .csv file  | Python |
+
 <br>
 
 ### Exploratory Data Analysis
