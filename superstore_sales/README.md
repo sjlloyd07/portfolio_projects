@@ -18,7 +18,7 @@ The data was taken from this [kaggle dataset](https://www.kaggle.com/datasets/is
 
 The data was confirmed to be complete and consistent during [cleaning and preparation](/superstore_sales/cleaning.md).
 
-<br>
+<br><br>
 
 ## Analysis
 ### What times of year had the most sales?
@@ -33,7 +33,7 @@ The data was confirmed to be complete and consistent during [cleaning and prepar
 
 [⏯️ **Go to Animated Sales Dashboard**](/superstore_sales/.README#Sales-Dashboard---Years)
 
-<br>
+<br><br>
 
 ### What segment had the most/least growth?
 
@@ -45,7 +45,7 @@ Similarly, the **Consumer** segment had almost no growth from **2011** to **2012
 
 ![segment_sales](/superstore_sales/images/segment_sales.PNG)
 
-<br>
+<br><br>
 
 ### What product category had the most sales?
 
@@ -56,12 +56,16 @@ The most significant variations occurred when **technology** sales *increased 20
 
 Both **corporate** and **home office** sales varied drastically in comparison to **consumer** sales.
 
+<br>
+
 #### Corporate
 From 2011 to 2012, **furniture** had little growth while **technology** sales *increase 40%*, and inversely, **office supplies** *dropped 30%*. 
 
 **All category** sales *increased over 50%* into 2013.  
 
 **Office supplies** *increase another 70%* into 2014, **technology** over *15%*, and **furniture** sales *dropped 20%* from 2013.
+
+<br>
 
 #### Home Office
 **Furniture** and **office supplies** both *increased over 15%* from 2011 to 2012, while **technology** sales *decreased 50%* during this time.  
@@ -76,7 +80,7 @@ Going into 2013, sales for **furniture** *decreased 30%*, **office supplies** co
 
  [⏯️ **Go to Sales Dashboard**](/superstore_sales/.README#Sales-Dashboard---Segment)
 
-<br>
+<br><br>
 
 ### What was the most profitable category/subcategory of products?
 Products in the technology category were the most profitable over the timeline, and copiers were the most profitable sub-category of products within that followed by phones and accessories. This was true with regards to every segment.  
