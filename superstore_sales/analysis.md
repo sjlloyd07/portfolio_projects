@@ -1,5 +1,3 @@
-# Analysis
-
 # Exploratory Analysis
 Each row in the dataset is a transaction item and has a unique `row_id`.
 
