@@ -153,4 +153,4 @@ The consumer segment made up just over half of all sales during this time period
 ## Sales Dashboard - Segment
 ![sales_dash_segment](/superstore_sales/images/segment_sales_dah.gif)
 
-[Back to Home Office ⤴️](/superstore_sales/README.md#home-office)
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-product-category-had-the-most-sales)
