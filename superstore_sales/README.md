@@ -85,7 +85,7 @@ Going into 2013, sales for **furniture** *decreased 30%*, **office supplies** co
 ### What was the most profitable category/subcategory of products?
 Products in the technology category were the most profitable over the timeline, and copiers were the most profitable sub-category of products within that followed by phones and accessories. This was true with regards to every segment.  
 
-The least profitable products by far were tables in the furniture category with negative profits of almost $20000.
+The least profitable products by far were tables in the furniture category with negative profits of almost $18,000.
 
 <br>
 
