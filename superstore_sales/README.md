@@ -31,7 +31,7 @@ The data was confirmed to be complete and consistent during [cleaning and prepar
 
 ![monthly_sales](/superstore_sales/images/montly_sales.PNG)
 
-[⏯️ **Go to Animated Sales Dashboard**](/superstore_sales/.README#Sales-Dashboard---Years)
+[⏯️ **Go to Animated Sales Dashboard**](/superstore_sales/.README.md#Sales-Dashboard---Years)
 
 <br><br>
 
@@ -78,7 +78,7 @@ Going into 2013, sales for **furniture** *decreased 30%*, **office supplies** co
 
 ![category_sales](/superstore_sales/images/category_sales.PNG)
 
- [⏯️ **Go to Sales Dashboard**](/superstore_sales/.README#Sales-Dashboard---Segment)
+ [⏯️ **Go to Sales Dashboard**](/superstore_sales/.README.md#Sales-Dashboard---Segment)
 
 <br><br>
 
