@@ -14,7 +14,7 @@
 ###  Webscraping  
 |  Project  |  Description  | Tools |
 | - | - | - |
-|  [craigslist scraper](/craigslist_scraper)  |  save all current listings in a craigslist category to a .csv file  | Python |
+|  [craigslist scraper](/craigslist_scraper)  |  save all current listing titles in a craigslist category to a .csv file  | Python |
 
 <br>
 
