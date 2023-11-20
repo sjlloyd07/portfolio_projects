@@ -31,6 +31,8 @@ The data was confirmed to be complete and consistent during [cleaning and prepar
 
 ![monthly_sales](/superstore_sales/images/montly_sales.PNG)
 
+![monthly_sales](/superstore_sales/images/montly_sales_v2.PNG)
+
 [⏯️ **Go to Animated Sales Dashboard**](/superstore_sales/README.md#sales-dashboard---years)
 
 <br><br>
@@ -44,6 +46,14 @@ Similarly, the **Consumer** segment had almost no growth from **2011** to **2012
 <br>
 
 ![segment_sales](/superstore_sales/images/segment_sales.PNG)
+
+⏯️ **Go to Yearly Segment Sales**
+
+* [2011](/superstore_sales/README.md#2011)  
+* [2012](/superstore_sales/README.md#2012)  
+* [2013](/superstore_sales/README.md#2013)
+* [2014](/superstore_sales/README.md#2014)
+
 
 <br><br>
 
@@ -76,7 +86,7 @@ Going into 2013, sales for **furniture** *decreased 30%*, **office supplies** co
 
 <br>
 
-![category_sales](/superstore_sales/images/category_sales.PNG)
+![category_sales](/superstore_sales/images/category_sales_v2.PNG)
 
  [⏯️ **Go to Sales Dashboard**](/superstore_sales/README.md#sales-dashboard---segment)
 
@@ -144,13 +154,35 @@ The consumer segment made up just over half of all sales during this time period
 <br><br>
 
 ## Sales Dashboard - Years
-![sales_dash_years](/superstore_sales/images/year_sales_dash.gif)
+![sales_dash_years](/superstore_sales/images/years.gif)
 
 [Back to Monthly Sales ⤴️](/superstore_sales/README.md#what-times-of-year-had-the-most-sales)
 
 <br>
 
-## Sales Dashboard - Segment
-![sales_dash_segment](/superstore_sales/images/segment_sales_dah.gif)
+## Sales Dashboard - Segments
+![sales_dash_segment](/superstore_sales/images/segments.gif)
 
 [Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-product-category-had-the-most-sales)
+
+<br><br>
+
+## 2011
+![2011_sales](/superstore_sales/images/2011.gif)
+
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-most--least-growth)
+
+## 2012
+![2012_sales](/superstore_sales/images/2012.gif)
+
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-most--least-growth)
+
+## 2013
+![2013_sales](/superstore_sales/images/2013.gif)
+
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-most--least-growth)
+
+## 2014
+![2014_sales](/superstore_sales/images/2014.gif)
+
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-most--least-growth)
