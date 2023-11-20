@@ -170,19 +170,19 @@ The consumer segment made up just over half of all sales during this time period
 ## 2011
 ![2011_sales](/superstore_sales/images/2011.gif)
 
-[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-most--least-growth)
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-mostleast-growth)
 
 ## 2012
 ![2012_sales](/superstore_sales/images/2012.gif)
 
-[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-most--least-growth)
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-mostleast-growth)
 
 ## 2013
 ![2013_sales](/superstore_sales/images/2013.gif)
 
-[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-most--least-growth)
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-mostleast-growth)
 
 ## 2014
 ![2014_sales](/superstore_sales/images/2014.gif)
 
-[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-most--least-growth)
+[Back to Product Category Sales ⤴️](/superstore_sales/README.md#what-segment-had-the-mostleast-growth)
