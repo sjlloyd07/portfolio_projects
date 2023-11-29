@@ -16,23 +16,3 @@
 | - | - | - |
 |  [craigslist scraper](/craigslist_scraper)  |  save all current listing titles in a craigslist category to a .csv file  | Python |
 
-<br>
-
-### Exploratory Data Analysis
-|  Project  |  Description  |
-| ---  |  ---  |
-|  -  |  -  |
-<br>
-
-### Data Cleaning
-|  Project  |  Description  |
-| ---  |  ---  |
-|  -  |  -  |
-<br>
-
-### Data Visualization
-|  Project  |  Description  |
-| ---  |  ---  |
-|  -  |  -  |
-<br>
-
