@@ -1,11 +1,12 @@
 # Cleaning and Preparation
-A new PostgreSQL database was created to house the project.
-The dataset `.csv` file was imported to a new table, `sales_raw`, for inspection, cleaning, and preparation for analysis.
 
-The table created to house the raw data was declared with column names and datatypes corresponding to what inital inspeciton of the `.csv` file revealed.
+The data was imported to a new table created in a PostgreSQL databse for inspection, cleaning, and preparation for analysis.
 
+The table was defined with column names and datatypes corresponding to the `.csv` header names.
+
+### Table Summary
 <details>
-    <summary><strong>View Query</strong></summary><br>
+    <summary><strong>🔎 View Query</strong></summary><br>
 
 ```sql
 SELECT *
@@ -13,7 +14,7 @@ FROM sales_raw
 LIMIT 5;
 ```
 </details>
-
+	
 | invoice_no | stock_code | description                         | quantity | invoice_date        | unit_price | customer_id | country        |
 |------------|------------|-------------------------------------|----------|---------------------|------------|-------------|----------------|
 | 536365     | 85123A     | WHITE HANGING HEART T-LIGHT HOLDER  | 6        | 2010-12-01 08:26:00 | 2.55       | 17850       | United Kingdom |
@@ -25,7 +26,7 @@ LIMIT 5;
 <br>
 
 <details>
-    <summary><strong>View Query</strong></summary><br>
+    <summary><strong>🔎 View Query</strong></summary><br>
 
 ```sql
 SELECT column_name, data_type
@@ -47,10 +48,13 @@ WHERE table_name = 'sales_raw';
 
 <br>
 
-### Create `TEMP TABLE sales_temp` from `sales_raw` table to manipulate during cleaning and processing.
 
-<details>
-    <summary><strong>View Query</strong></summary><br>
+
+----------------------------------------------------------------------------
+
+# EDA, Cleaning, Processing
+
+### 🔷 Create `TEMP TABLE` to manipulate during cleaning and processing.
 
 ```sql
 CREATE TEMP TABLE sales_temp AS
@@ -58,19 +62,15 @@ CREATE TEMP TABLE sales_temp AS
 	FROM sales_raw;
 
 ```
-</details>
+
 <br>
 
+---
 
-----------------------------------------------------------------------------
-
-# EDA, Cleaning, Processing
-
-
-### Check for missing values in dataset (all columns).
+### 🔷 Check for missing values in dataset (all columns).
 
 <details>
-    <summary><strong>View Query</strong></summary><br>
+    <summary><strong>🔎 View Query</strong></summary><br>
 
 ```sql
 SELECT COUNT(*) AS null_values
@@ -87,19 +87,25 @@ WHERE invoice_no ISNULL OR stock_code ISNULL OR description ISNULL
 |-------------|
 | 144025	  |
 
+
 <br>
 
-### Dive deeper into missing values - column by column.
+---
 
-All columns were checked individually for `NULL` values using `COUNT(*)` and `WHERE 
-*column_name* ISNULL`. `quantity` and `unit_price` were checked for negative or 0 values.
+### 🔷 Dive deeper into missing values - column by column.
 
-- Two columns contained `NULL` values: `description` and `customer_id`; 
+- All columns were checked individually for `NULL` values using `COUNT(*)` and `WHERE` 
+*`column_name`* `ISNULL`.  
+- `quantity` and `unit_price` were checked for negative or 0 values.
 
-	**`description`**
+<br>
+
+**Two columns contained `NULL` values: `description` and `customer_id`.**
+
+-	**`description`**
 
 	<details>
-		<summary><strong>View Query</strong></summary><br>
+		<summary><strong>🔎 View Query</strong></summary><br>
 		
 	```sql
 
@@ -114,11 +120,12 @@ All columns were checked individually for `NULL` values using `COUNT(*)` and `WH
 	|-------------|
 	| 1454		  |
 
+	<br>
 
-	**`customer_id`**
+-	**`customer_id`**
 
 	<details>
-		<summary><strong>View Query</strong></summary><br>
+		<summary><strong>🔎 View Query</strong></summary><br>
 		
 	```sql
 
@@ -133,13 +140,14 @@ All columns were checked individually for `NULL` values using `COUNT(*)` and `WH
 	|-------------|
 	| 135080	  |
 
+	<br>
 
-- `quantity` and `unit_price` both contained negative or 0 values.
+**`quantity` and `unit_price` both contained negative or 0 values.**
 
-	** quantity **
+-	**`quantity`**
 
 	<details>
-		<summary><strong>View Query</strong></summary><br>
+		<summary><strong>🔎 View Query</strong></summary><br>
 		
 	```sql
 
@@ -154,11 +162,12 @@ All columns were checked individually for `NULL` values using `COUNT(*)` and `WH
 	|--------|
 	| 10624  |
 
+	<br>
 
-	** unit_price **
+-	**`unit_price`**
 
 	<details>
-		<summary><strong>View Query</strong></summary><br>
+		<summary><strong>🔎 View Query</strong></summary><br>
 		
 	```sql
 
@@ -175,16 +184,17 @@ All columns were checked individually for `NULL` values using `COUNT(*)` and `WH
 
 
 <br>
+<br>
 
+---
 
+### ❗ Issue: 
+* **There are columns with missing data: NULL and 0 values.**
+### 🛠️ Action: 
+* **Remove rows with NULL or 0 values from the dataset.**
+  
+*A real world dataset would require further investigation, but we will proceed w/ removing the rows w/ missing data for the purpose of this analysis.*
 
-### Issue: There are columns with missing data: NULL and 0 values.
-
-### Action: Remove rows with NULL or 0 values from the dataset. * A real world dataset would require further investigation, but we will proceed w/ removing the rows w/ missing data for the purpose of this analysis.
-
-<details>
-	<summary><strong>View Query</strong></summary><br>
-	
 ```sql
 
 DELETE FROM sales_temp2 
@@ -194,41 +204,40 @@ DELETE FROM sales_temp2
 		OR customer_id ISNULL;
 
 ```
-</details>
-
 <br>
 
-
-- Confirm successful update.
+- **Confirm successful update.**
 
 	<details>
-		<summary><strong>View Query</strong></summary><br>
-
+		<summary><strong>🔎 View Query</strong></summary><br>
+	
 	```sql
-
+	
 	SELECT COUNT(*) AS missing
 	FROM sales_temp
 		WHERE quantity <= 0 
 			OR	description ISNULL 
 			OR	unit_price <= 0 
 			OR customer_id ISNULL
-
+	
 	```
 	</details>
 	
 	**Results Summary:**
-
+	
 	| missing |
 	|---------|
 	| 0       |
-	
 
 
+<br>
 
-## Number of Records
+---
+
+### 🔷 Number of Records
 
 <details>
-    <summary><strong>View Query</strong></summary><br>
+    <summary><strong>🔎 View Query</strong></summary><br>
 	
 ```sql
 
@@ -244,10 +253,12 @@ FROM sales_temp;
 
 <br>
 
-## Unique Invoices
+---
+
+### 🔷 Unique Invoices
 
 <details>
-    <summary><strong>View Query</strong></summary><br>
+    <summary><strong>🔎 View Query</strong></summary><br>
 	
 ```sql
 
@@ -263,11 +274,12 @@ FROM sales_temp;
 
 <br>
 
+---
 
-## Does every stock_code match a description?
+### 🔷 Does every stock_code match a description?
 
 <details>
-    <summary><strong>View Query</strong></summary><br>
+    <summary><strong>🔎 View Query</strong></summary><br>
 	
 ```sql
 
@@ -285,184 +297,203 @@ FROM sales_temp;
 
 <br>
 
-### Issue: There are fewer stock_code values than description values in the dataset.
+---
 
-### Action: Investigate why there are more descriptions than stock codes.
+### ❗ Issue: 
+* **There are fewer stock_code values than description values in the dataset.**
 
-- Create `TEMP TABLE` with all stock codes and descriptions, partition by stock_codes to assign row numbers to every `stock_code`-`description` pair. Query this table to return results of only stock codes that have more than one description.
+### 🛠️ Action: 
+* **Investigate why there are more descriptions than stock codes.**
 
-	<details>
-		<summary><strong>View Query</strong></summary><br>
-		
-	```sql
-
-	CREATE TEMP TABLE stock_rows AS (
-		WITH sc_list AS (
-			SELECT DISTINCT stock_code
-			FROM sales_temp
+	- Create `TEMP TABLE` with all stock codes and descriptions.
+	- Partition by stock codes to assign row numbers to every `stock_code`-`description` pair.
+	- Query this table to return results of only stock codes that have more than one description.
+	
+		<details>
+			<summary><strong>🔎 View Query</strong></summary><br>
+			
+		```sql
+	
+		CREATE TEMP TABLE stock_rows AS (
+			WITH sc_list AS (
+				SELECT DISTINCT stock_code
+				FROM sales_temp
+				ORDER BY stock_code
+				)
+	
+			SELECT
+				s.stock_code,
+				s.description,
+				ROW_NUMBER() OVER(PARTITION BY s.stock_code ORDER BY s.description) AS rn
+	
+			FROM sales_temp s
+			LEFT JOIN sc_list sc
+				ON s.stock_code = sc.stock_code
+			GROUP BY s.stock_code, s.description
 			ORDER BY stock_code
-			)
+			);
+	
+		SELECT stock_code, description
+		FROM stock_rows
+		WHERE stock_code IN (
+			SELECT stock_code
+			FROM stock_rows
+			WHERE rn > 1)
+		ORDER BY stock_code;
+	
+		```
+		</details>
+			 
+		**Results Summary:**
+	
+		| stock_code | description                         |
+		|------------|-------------------------------------|
+		| 16156L     | WRAP CAROUSEL                       |
+		| 16156L     | WRAP, CAROUSEL                      |
+		| 17107D     | FLOWER FAIRY 5 DRAWER LINERS        |
+		| 17107D     | FLOWER FAIRY 5 SUMMER DRAW LINERS   |
+		| 17107D     | FLOWER FAIRY,5 SUMMER B'DRAW LINERS |
 
-		SELECT
+<br> 
+
+---
+
+### ❗ Issue: 
+* **Some stock codes were input with multiple descriptions.**
+
+### 🛠️ Action: 
+* **Find and eliminate redundant descriptions for stock codes.**
+	
+	- Create `TEMP TABLE` that only contains stock codes with first returned description. Use this in an `UPDATE` statement to replace redundant descriptions.
+	
+		<details>
+			<summary><strong>🔎 View Query</strong></summary><br>
+	
+		```sql
+	
+		DROP TABLE IF EXISTS unique_stock_desc; 
+		CREATE TEMP TABLE unique_stock_desc AS 
+			SELECT stock_code, description
+			FROM stock_rows
+			WHERE rn = 1 
+			ORDER BY stock_code
+	
+		UPDATE sales_temp 
+		SET description	= (
+			SELECT usd.description
+			FROM unique_stock_desc usd
+			WHERE usd.stock_code = sales_temp.stock_code)
+	
+		```
+		</details>
+	
+		Check stock codes and descriptions after update.
+		
+		<details>
+			<summary><strong>🔎 View Query</strong></summary><br>
+	
+		```sql
+	
+		SELECT 
+			COUNT(DISTINCT stock_code) AS stock_count, 
+			COUNT(DISTINCT description) AS desc_count
+		FROM sales_temp
+	
+		```
+		</details>
+	
+		| stock_count | desc_count |
+		|-------------|------------|
+		| 3665        | 3647       |
+
+<br>
+
+---
+
+### ❗ Issue: 
+* **After description update, there are more unique stock codes than descriptions.**
+
+### 🛠️ Action: 
+* **Investigate why some descriptions would have multiple stock codes.**
+	
+	- Return stock codes that have multiple descriptions.
+	
+		<details>
+			<summary><strong>🔎 View Query</strong></summary><br>
+	
+		```sql
+	
+		WITH sc_list AS ( -- return stock code list
+		SELECT DISTINCT stock_code
+		FROM sales_temp
+		ORDER BY stock_code
+		),
+		desc_rows AS ( -- return descriptions/stock codes partitioned by description
+		SELECT 
+			s.description, 
 			s.stock_code,
-			s.description,
-			ROW_NUMBER() OVER(PARTITION BY s.stock_code ORDER BY s.description) AS rn
-
+			ROW_NUMBER() OVER(PARTITION BY s.description ORDER BY s.stock_code) AS rn
 		FROM sales_temp s
 		LEFT JOIN sc_list sc
 			ON s.stock_code = sc.stock_code
 		GROUP BY s.stock_code, s.description
-		ORDER BY stock_code
-		);
-
-	SELECT stock_code, description
-	FROM stock_rows
-	WHERE stock_code IN (
-		SELECT stock_code
-		FROM stock_rows
-		WHERE rn > 1)
-	ORDER BY stock_code;
-
-	```
-		</details>
-		 
-	**Results Summary:**
-
-	| stock_code | description                         |
-	|------------|-------------------------------------|
-	| 16156L     | WRAP CAROUSEL                       |
-	| 16156L     | WRAP, CAROUSEL                      |
-	| 17107D     | FLOWER FAIRY 5 DRAWER LINERS        |
-	| 17107D     | FLOWER FAIRY 5 SUMMER DRAW LINERS   |
-	| 17107D     | FLOWER FAIRY,5 SUMMER B'DRAW LINERS |
-
-<br> 
-
-### Issue: Some stock codes were input with multiple descriptions.
-
-### Action: Find and eliminate redundant descriptions for stock codes.
-
-- Create `TEMP TABLE` that only contains stock codes with first returned description. Use this in an `UPDATE` statement to replace redundant descriptions.
-
-	<details>
-		<summary><strong>View Query</strong></summary><br>
-
-	```sql
-
-	DROP TABLE IF EXISTS unique_stock_desc; 
-	CREATE TEMP TABLE unique_stock_desc AS 
-		SELECT stock_code, description
-		FROM stock_rows
-		WHERE rn = 1 
-		ORDER BY stock_code
-
-	UPDATE sales_temp 
-	SET description	= (
-		SELECT usd.description
-		FROM unique_stock_desc usd
-		WHERE usd.stock_code = sales_temp.stock_code)
-
-	```
-	</details>
-
-	Check stock codes and descriptions after update.
-	
-	<details>
-		<summary><strong>View Query</strong></summary><br>
-
-	```sql
-
-	SELECT 
-		COUNT(DISTINCT stock_code) AS stock_count, 
-		COUNT(DISTINCT description) AS desc_count
-	FROM sales_temp
-
-	```
-	</details>
-
-	| stock_count | desc_count |
-	|-------------|------------|
-	| 3665        | 3647       |
-
-<br>
-
-### Issue: After description update, there are more unique stock codes than descriptions.
-
-### Action: Investigate why some descriptions would have multiple stock codes.
-
-- Return stock codes that have multiple descriptions.
-
-	<details>
-		<summary><strong>View Query</strong></summary><br>
-
-	```sql
-
-	WITH sc_list AS ( -- return stock code list
-	SELECT DISTINCT stock_code
-	FROM sales_temp
-	ORDER BY stock_code
-	),
-	desc_rows AS ( -- return descriptions/stock codes partitioned by description
-	SELECT 
-		s.description, 
-		s.stock_code,
-		ROW_NUMBER() OVER(PARTITION BY s.description ORDER BY s.stock_code) AS rn
-	FROM sales_temp s
-	LEFT JOIN sc_list sc
-		ON s.stock_code = sc.stock_code
-	GROUP BY s.stock_code, s.description
-	ORDER BY description
-	)
-	
-	SELECT description, stock_code, rn --return only results w/ duplicate descriptions
-	FROM desc_rows
-	WHERE description IN 
-		(SELECT description
+		ORDER BY description
+		)
+		
+		SELECT description, stock_code, rn --return only results w/ duplicate descriptions
 		FROM desc_rows
-		WHERE rn > 1)
-	;
-
-	```
-	</details>
+		WHERE description IN 
+			(SELECT description
+			FROM desc_rows
+			WHERE rn > 1)
+		;
 	
-	**Results Summary:**
-	
-	| description                  | stock_code | rn |
-	|------------------------------|------------|----|
-	| COLOURING PENCILS BROWN TUBE | 10133      | 1  |
-	| COLOURING PENCILS BROWN TUBE | 10135      | 2  |
-	| COLUMBIAN CANDLE RECTANGLE   | 72131      | 1  |
-	| COLUMBIAN CANDLE RECTANGLE   | 72133      | 2  |
-	| COLUMBIAN CANDLE ROUND       | 72128      | 1  |
-
-<br>
-
-### Issue: Some stock codes refer to multiple identical descriptions due to possible update errors.
-
-### Action: Assume newer product version stock codes were updated in series, but descriptions were not. Update descriptions to match stock codes by adding version numbers to duplicates.
-
-- Update duplicate descriptions w/ appropriate version numbers.
- 
-	 <details>
-			<summary><strong>View Query</strong></summary><br>
-
-		```sql
-
-		UPDATE desc_rows
-		SET description = CONCAT(description, ' v', rn);
-
 		```
 		</details>
 		
-	 <details>
-			<summary><strong>View Results Summary</strong></summary><br>
+		**Results Summary:**
+		
+		| description                  | stock_code | rn |
+		|------------------------------|------------|----|
+		| COLOURING PENCILS BROWN TUBE | 10133      | 1  |
+		| COLOURING PENCILS BROWN TUBE | 10135      | 2  |
+		| COLUMBIAN CANDLE RECTANGLE   | 72131      | 1  |
+		| COLUMBIAN CANDLE RECTANGLE   | 72133      | 2  |
+		| COLUMBIAN CANDLE ROUND       | 72128      | 1  |
 
+<br>
+
+---
+
+### ❗ Issue: 
+* **Some stock codes refer to multiple identical descriptions due to possible update errors.**
+* **Assume newer product version stock codes were updated in series, but descriptions were not.**
+
+### 🛠️ Action: 
+* **Update descriptions to match stock codes by adding version numbers to duplicates.**
+
+	- Update duplicate descriptions w/ appropriate version numbers.
+	 
+		 <details>
+			<summary><strong>🔎 View Query</strong></summary><br>
+	
 		```sql
-
+	
+		UPDATE desc_rows
+		SET description = CONCAT(description, ' v', rn);
+	
+		```
+		</details>
+		
+		 <details>
+			<summary><strong>🔎 View Results Summary</strong></summary><br>
+	
+		```sql
+	
 		SELECT *
 		FROM desc_rows
 		LIMIT 5;
-
+	
 		```
 		
 		| description                     | stock_code | rn |
@@ -474,14 +505,16 @@ FROM sales_temp;
 		| COLUMBIAN CANDLE ROUND v1       | 72128      | 1  |
 		
 		</details>		
-		
-- Update unique stock code description table w/ updated descriptions.
-
+	
+	<br>
+	  
+	- Update unique stock code description table w/ updated descriptions.
+	
 		<details>
-			<summary><strong>View Query</strong></summary><br>
-
+			<summary><strong>🔎 View Query</strong></summary><br>
+	
 		```sql
-
+	
 		WITH desc_update AS (
 			SELECT
 				usd.stock_code,
@@ -496,22 +529,20 @@ FROM sales_temp;
 			LEFT JOIN desc_rows dr
 				ON usd.stock_code = dr.stock_code
 			)
-
+	
 		UPDATE unique_stock_desc
 		SET description =
 			(SELECT new_desc
 			FROM desc_update du
 			WHERE unique_stock_desc.stock_code = du.stock_code);
-
+	
 		```
 		</details>
-		
 	
-- Update `sales_temp` table w/ new descriptions.
-
-	<details>
-			<summary><strong>View Results Summary</strong></summary><br>
-
+	<br>
+		
+	- Update `sales_temp` table w/ new descriptions.
+		
 		```sql
 				
 		UPDATE sales_temp
@@ -519,51 +550,55 @@ FROM sales_temp;
 			(SELECT usd.description
 			 FROM unique_stock_desc usd
 			 WHERE sales_temp.stock_code = usd.stock_code);
-
+	
 		```
-				
-		</details>		
+	
+	 <br>
 		
-- Check that update was successful.
-
+	- Check that update was successful.
+	
 		<details>
-			<summary><strong>View Query</strong></summary><br>
-
+			<summary><strong>🔎 View Query</strong></summary><br>
+	
 		```sql
-
+	
 		SELECT 
 			COUNT(DISTINCT stock_code) AS stock_count, 
 			COUNT(DISTINCT description) AS desc_count
 		FROM sales_temp
-
+	
 		```
 		</details>
-
+	
 		| stock_count | desc_count |
 		|-------------|------------|
 		| 3665        | 3665       |
 		
 <br>
 
-### Issue: Unneccessary non-product stock items are in the dataset and should be removed for this analysis.
+---
 
-### Action: Update dataset to remove non-product stock items.
+### ❗ Issue: 
+* **Unneccessary non-product stock items are in the dataset and should be removed for this analysis.**
+
+### 🛠️ Action: 
+* **Update dataset to remove non-product stock items.**
 
 	<details>
-		<summary><strong>View Query</strong></summary><br>
-
+		<summary><strong>🔎 View Query</strong></summary><br>
+	
 	```sql
-
+	
 	DELETE FROM sales_temp
 	WHERE stock_code IN ('M', 'C2', 'POST', 'DOT', 'PADS', 'BANK CHARGES');
-
+	
 	```
 	</details>
 
 - Check that update was successful.
 
 	<details>
-		<summary><strong>View Query</strong></summary><br>
+		<summary><strong>🔎 View Query</strong></summary><br>
 
 	```sql
 
@@ -581,36 +616,36 @@ FROM sales_temp;
 <br>
 <br>
 
-### Final summary
+---
 
-	<details>
-		<summary><strong>View Query</strong></summary><br>
+## 🔷 Final summary
 
-	```sql
+<details>
+	<summary><strong>🔎 View Query</strong></summary><br>
 
-	SELECT 
-		COUNT(*) AS records,
-		COUNT(DISTINCT invoice_no) AS invoices,
-		COUNT(DISTINCT stock_code) AS unique_stock_items,
-		SUM(quantity) AS total_items_sold,
-		ROUND(SUM(unit_price),2) AS total_sales,
-		COUNT(DISTINCT customer_id) AS customers,
-		COUNT(DISTINCT country) AS countries
-	FROM sales_temp
+```sql
 
-	```
-	</details>
-	
-	**Results Summary:**
-	
-	| records | invoices | unique_stock_items | total_items_sold | total_sales | customers | countries |
-	|---------|----------|--------------------|------------------|-------------|-----------|-----------|
-	| 396337  | 18402    | 3659               | 5157354          | 872972.53   | 4334      | 37        |
+SELECT 
+	COUNT(*) AS records,
+	COUNT(DISTINCT invoice_no) AS invoices,
+	COUNT(DISTINCT stock_code) AS unique_stock_items,
+	SUM(quantity) AS total_items_sold,
+	ROUND(SUM(unit_price),2) AS total_sales,
+	COUNT(DISTINCT customer_id) AS customers,
+	COUNT(DISTINCT country) AS countries
+FROM sales_temp
+
+```
+</details>
+
+**Results Summary:**
+
+| records | invoices | unique_stock_items | total_items_sold | total_sales | customers | countries |
+|---------|----------|--------------------|------------------|-------------|-----------|-----------|
+| 396337  | 18402    | 3659               | 5157354          | 872972.53   | 4334      | 37        |
 
 <br>
 ---
 <br>
 
-
-# Normalization
 
