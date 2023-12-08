@@ -15,10 +15,10 @@ The owners of a retail store request answers to the following questions they hav
 <br>
 
 ## Table of Contents
-* [Data Source](https://github.com/sjlloyd07/tree/main/portfolio_projects/retail_sales#Data-Source)
-* [Cleaning and Prep](/retail_sales#Cleaning----Prep)
-* [Dashboard](/retail_sales#Dashboard)
-* [Findings](/retail_sales#Findings)
+* [Data Source](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Data-Source)
+* [Cleaning and Prep](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Cleaning----Prep)
+* [Dashboard](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Dashboard)
+* [Findings](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Findings)
 
 <br>
 ----
