@@ -1,9 +1,9 @@
-# Scenario
+# Computer Hardware Store Inventory Analysis
+### Overview
 After a company wide inventory count, a computer hardware company is left with a single `.csv` file that includes product details such as part numbers, descriptions, location, and quantity.  The products are distributed among its multiple international warehouses.
 
 <br>
 
-## Business Task
 The company stakeholders request a summary of the inventory dataset that includes the following figures for the company as a whole and as applied to each individual warehouse:
 
 * Total product ***count*** and ***value*** overall and separated by product category.
@@ -11,7 +11,18 @@ The company stakeholders request a summary of the inventory dataset that include
 * Products with the ***highest gross values***.
 * ***Most profitable***  products.
 
-<br><br>
+<br>
+
+### Table of Contents
+- [Data](https://github.com/sjlloyd07/portfolio_projects/tree/main/hardware_store#data)
+- [Analysis](https://github.com/sjlloyd07/portfolio_projects/tree/main/hardware_store#inventory-analysis)
+- [Conclusion](https://github.com/sjlloyd07/portfolio_projects/tree/main/hardware_store#conclusion)
+
+<br>
+
+---
+
+<br>
 
 
 # Data 
@@ -92,6 +103,8 @@ However, products with both the [*highest and lowest rate of return*](/hardware_
 | Video Card   | 238        | EVGA 06G-P4-4998-KR        | 42.37 %        | 174          | MSI GTX 1080 TI AERO 11G OC | 11.53 %          |
 
 <br>
+
+# Conclusion
 
 The motherboard _Supermicro X10SDV-8C-TLN4F_ is the most profitable product at 5 out of 9 warehouses with a rate of return of 42.9%. The storage unit _Corsair Vengeance LPX_ - RoR 42.4% - and video card  	_Zotac ZT-P10810C-10P_ - RoR 42.0% - are the most profitable products at 2 each of the remaining 4 warehouses. 
 
