@@ -77,7 +77,9 @@ LIMIT 5
 </details>
 <br><br>
 
-The `inventory_raw` table was checked for duplicate rows using the `ROW_NUMBER()` window function and partitioning the rows by known row identifiers - `product_id`, `warehouse_id`, and `quantity`. This returns a row number value of **1** for every unique row and **2** if that row is a duplicate.
+The `inventory_raw` table was checked for duplicate rows using the `ROW_NUMBER()` window function and partitioning the rows by known row identifiers - `product_id`, `warehouse_id`, and `quantity`. This returns a row number value of **1** for every unique row and **2** if that row is a duplicate.  
+** Correction: `quantity` should not be included in this statement.
+
 
 ```sql
 SELECT ROW_NUMBER() OVER(PARTITION BY product_id, warehouse_id, quantity ORDER BY warehouse_id) as rn, *	
