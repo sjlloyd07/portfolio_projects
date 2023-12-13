@@ -1,4 +1,4 @@
-# Office Superstore Sales Trend Analysis
+# Office Superstore Sales Analysis
 
 ### In 2015, the business stakeholders at an office supply super store want to know how they should plan their resources for the future by examining the previous years' sales records.
 
@@ -13,14 +13,26 @@ The stakeholders request the following information with which they'll use to mak
 
 <br>
 
-## Data 
+## Table of Contents
+- [Data](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#data)
+- [Analysis](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#analysis)
+- [Dashboard](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#dashboards)
+- [Conclusion](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#conclusion)
+
+<br>
+
+---
+
+<br>
+
+# Data 
 The data was taken from this [kaggle dataset](https://www.kaggle.com/datasets/ishanshrivastava28/superstore-sales) that consists of mock superstore sales transaction records taken from 2011 to 2014.
 
 The data was confirmed to be complete and consistent during [cleaning and preparation](/superstore_sales/cleaning.md).
 
 <br><br>
 
-## Analysis
+# Analysis
 ### What times of year had the most sales?
 
 **September, November,** and **December** were the *highest* selling months in every year.  
@@ -112,7 +124,7 @@ The highest selling product from 2011 to 2014 was a **Canon brand copier** of wh
 
 <br>
 
-## Conclusion
+# Conclusion
 The consumer segment made up just over half of all sales during this time period, followed by corporate and home office.
 
 <br>
@@ -152,6 +164,8 @@ The consumer segment made up just over half of all sales during this time period
 
 
 <br><br>
+
+# Dashboards
 
 ## Sales Dashboard - Years
 ![sales_dash_years](/superstore_sales/images/years.gif)
