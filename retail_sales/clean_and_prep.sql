@@ -255,7 +255,7 @@ SELECT
 	COUNT(DISTINCT invoice_no) AS invoices,
 	COUNT(DISTINCT stock_code) AS unique_stock_items,
 	SUM(quantity) AS total_items_sold,
-	ROUND(SUM(unit_price),2) AS total_sales,
+	ROUND(SUM(unit_price * quantity),2) AS total_sales,
 	COUNT(DISTINCT customer_id) AS customers,
 	COUNT(DISTINCT country) AS countries
 FROM sales_temp
