@@ -249,7 +249,7 @@ FROM sales_temp
 
 
 
--- final summary
+-- column summary
 SELECT 
 	COUNT(*) AS records,
 	COUNT(DISTINCT invoice_no) AS invoices,
@@ -262,8 +262,19 @@ FROM sales_temp
 
 
 
+-- additional filtering for final dataset summary
 
-select * from sales_temp
+SELECT 
+	COUNT(*) AS records,
+	COUNT(DISTINCT invoice_no) AS invoices,
+	COUNT(DISTINCT stock_code) AS unique_stock_items,
+	SUM(quantity) AS total_items_sold,
+	ROUND(SUM(unit_price * quantity),2) AS total_sales,
+	COUNT(DISTINCT customer_id) AS customers,
+	COUNT(DISTINCT country) AS countries
+FROM sales_clean
+WHERE date_part('month', invoice_date) != 12
+	AND date_part('year', invoice_date) != 2010
 
 
 
