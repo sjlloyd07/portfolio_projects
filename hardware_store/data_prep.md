@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS inventory (
 
 <br>
 
-**`category`**
+### **`category`**
 
 ```sql
 INSERT INTO category
@@ -225,7 +225,7 @@ FROM category
 </details>
 <br><br><br>
 
-**`product`**
+### **`product`**
 
 ```sql
 INSERT INTO product(id, name, description, std_cost, list_price, category_id)
@@ -256,7 +256,7 @@ LIMIT 5
 </details>
 <br><br><br>
 
-**`region`**
+### **`region`**
 
 ⚠️ **ISSUE:** `region_id` values have no corresponding column for reference
 
@@ -291,7 +291,7 @@ FROM region
 </details>
 <br><br><br>
 
-**`country`**
+### **`country`**
 
 ```sql
 INSERT INTO country
@@ -322,7 +322,7 @@ FROM country
 </details>
 <br><br><br>
 
-**`warehouse`**
+### **`warehouse`**
 
 ```sql
 INSERT INTO warehouse
@@ -360,7 +360,7 @@ ORDER BY id
 </details>
 <br><br><br>
 
-**`inventory`**
+### **`inventory`**
 
 ```sql
 INSERT INTO inventory
