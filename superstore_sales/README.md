@@ -1,6 +1,7 @@
 # Office Superstore Sales Analysis
 
-### In 2015, the business stakeholders at an office supply super store want to know how they should plan their resources for the future by examining the previous years' sales records.
+### Overview
+In 2015, the business stakeholders at an office supply super store want to know how they should plan their resources for the future by examining the previous years' sales records.
 
 <br>
 
@@ -11,13 +12,15 @@ The stakeholders request the following information with which they'll use to mak
 * What was the most profitable category/subcategory of products?
 * What were the top selling products?
 
+---
+
 <br>
 
 ## Table of Contents
-- [Data](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#data)
-- [Analysis](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#analysis)
-- [Dashboard](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#dashboards)
-- [Conclusion](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#conclusion)
+### [Data](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#data)
+### [Analysis](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#analysis)
+### [Dashboard](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#dashboards)
+### [Conclusion](https://github.com/sjlloyd07/portfolio_projects/tree/main/superstore_sales#conclusion)
 
 <br>
 
