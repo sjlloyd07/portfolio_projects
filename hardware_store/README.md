@@ -13,10 +13,18 @@ The company stakeholders request a summary of the inventory dataset that include
 
 <br>
 
-### Table of Contents
-- [Data](https://github.com/sjlloyd07/portfolio_projects/tree/main/hardware_store#data)
-- [Analysis](https://github.com/sjlloyd07/portfolio_projects/tree/main/hardware_store#inventory-analysis)
-- [Conclusion](https://github.com/sjlloyd07/portfolio_projects/tree/main/hardware_store#conclusion)
+
+### Tools
+*  PostgreSQL (PgAdmnin4)
+*  Microsoft Excel
+
+--- 
+
+<br>
+
+## Table of Contents
+### ▫️ [Data](https://github.com/sjlloyd07/portfolio_projects/tree/main/hardware_store#data)
+### ▫️ [Analysis & Deliverables](https://github.com/sjlloyd07/portfolio_projects/tree/main/hardware_store#inventory-analysis--deliverables)
 
 <br>
 
@@ -24,11 +32,8 @@ The company stakeholders request a summary of the inventory dataset that include
 
 <br>
 
-
 # Data 
 The mock dataset used in this analysis was sourced from this [retail store computer hardware inventory dataset](https://www.kaggle.com/datasets/ivanchvez/hardwarestore?select=hardwareStore.csv). 
-
-The dataset was downloaded to local storage before data preparation took place utilizing Microsoft Excel and PostgreSQL. 
 
 A complete list of data preparation steps can be found [here](hardware_store/data_prep.md) and included the following:
 -  [inspection and upload](/hardware_store/data_prep.md#inspection-and-upload) of the dataset to a table in a newly created database
@@ -38,7 +43,7 @@ A complete list of data preparation steps can be found [here](hardware_store/dat
 <br>
 
 <!-- perform analysis using sql -->
-# Inventory Analysis
+# Inventory Analysis & Deliverables
 ### Count and Value
 The company inventory includes [208 unique products with a total of almost 120,000 pieces](/hardware_store/analysis.md#%E2%84%B9%EF%B8%8F-company-wide) located in [9 warehouses](/hardware_store/data_prep.md#table-warehouse).
 
@@ -104,8 +109,7 @@ However, products with both the [*highest and lowest rate of return*](/hardware_
 
 <br>
 
-# Conclusion
+* The motherboard _Supermicro X10SDV-8C-TLN4F_ is the most profitable product at **5 out of 9 warehouses** with a rate of return of **42.9%**.
+* The storage unit _Corsair Vengeance LPX_ - RoR **42.4%** - and video card _Zotac ZT-P10810C-10P_ - RoR **42.0%** - are the most profitable products at 2 each of the remaining 4 warehouses. 
 
-The motherboard _Supermicro X10SDV-8C-TLN4F_ is the most profitable product at 5 out of 9 warehouses with a rate of return of 42.9%. The storage unit _Corsair Vengeance LPX_ - RoR 42.4% - and video card  	_Zotac ZT-P10810C-10P_ - RoR 42.0% - are the most profitable products at 2 each of the remaining 4 warehouses. 
-
-Overall, the [video card product category is the most profitable](/hardware_store/analysis.md#average-gross-profit-and-rate-of-return-by-category) with the highest average rate of return - _26.1%_ - followed by storage - _25.7%_.
+Overall, the [video card product category is the most profitable](/hardware_store/analysis.md#average-gross-profit-and-rate-of-return-by-category) with the highest average rate of return - **_26.1%_** - followed by storage - **_25.7%_**.
