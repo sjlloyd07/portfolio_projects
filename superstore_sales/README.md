@@ -5,7 +5,7 @@ In 2015, the business stakeholders at an office supply super store want to know 
 
 <br>
 
-The stakeholders request the following information with which they'll use to make decisions:
+### Deliverables
 * What times of year had the most sales?
 * What segment had the most/least growth?
 * What product category had the most sales?
