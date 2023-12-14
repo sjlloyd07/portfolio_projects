@@ -4,7 +4,7 @@
 
 The owners of a retail store request answers to the following questions they have about the sales data from their store. The sales data contains transaction records that include invoice details by line item and customer location.
 
-### Requested Information:
+### Deliverables
 * How much in total sales did they do?
 * How many items sold total?
 * What times of year had the highest sales?
@@ -14,7 +14,7 @@ The owners of a retail store request answers to the following questions they hav
 
 <br>
 
-## Tools
+### Tools
 - PostgreSQL (PgAdmin4)
 - Tableau
 
@@ -26,7 +26,7 @@ The owners of a retail store request answers to the following questions they hav
 * ### [Data](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Data)
 * ### [Cleaning and Prep](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Cleaning--Prep)
 * ### [Dashboard](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Dashboard)
-* ### [Findings](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Findings)
+* ### [Deliverables](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#deliverables)
 
 ----
 
@@ -66,4 +66,21 @@ The PostgreSQL GUI PgAdmin4 was utilized to perform data inspection and cleaning
 
 ----
 
-# Findings
+# Deliverables
+* How much in total sales did they do?
+  * **$ 6369539.52**
+    
+* How many items sold total?
+   * **4559048**
+
+* What times of year had the highest sales?
+   * **The fourth quarter.**
+
+* What country had the highest sales?
+   * **United Kingdom**
+
+* What item sold the most?
+   * **Papercraft, Little Birdie**
+
+* Who was their best customer?
+   * **Customer 14646, Netherlands.**
