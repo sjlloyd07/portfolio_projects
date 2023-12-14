@@ -47,7 +47,7 @@ The PostgreSQL GUI PgAdmin4 was utilized to perform data inspection and cleaning
 
 | records | invoices | unique_stock_items | total_items_sold | total_sales | customers | countries |
 |---------|----------|--------------------|------------------|-------------|-----------|-----------|
-| 396337  | 18402    | 3659               | 5157354          | 872972.53   | 4334      | 37        |
+| 396337  | 18402    | 3659               | 5157354          | 7301987.41   | 4334      | 37        |
 
 <br>
 
