@@ -618,7 +618,7 @@ FROM sales_temp;
 
 ---
 
-## 🔷 Final summary
+## 🔷 Cleaned Column Summaries
 
 <details>
 	<summary><strong>🔎 View Query</strong></summary><br>
@@ -638,13 +638,55 @@ FROM sales_temp
 ```
 </details>
 
-**Results Summary:**
+**Results:**
 
 | records | invoices | unique_stock_items | total_items_sold | total_sales | customers | countries |
 |---------|----------|--------------------|------------------|-------------|-----------|-----------|
 | 396337  | 18402    | 3659               | 5157354          | 7301987.41   | 4334      | 37        |
 
 <br>
+
+For better comparison and understanding of the monthly sales data, analysis will proceed only on the monthly records that are complete in this dataset.  
+
+The following will be filtered out of the final data before proceeding with analysis and visualization:
+* incomplete December 2010 records
+* incomplete December 2011 records
+
+<br>
+
+**Final Cleaned Column Summaries**
+
+<details>
+	<summary><strong>🔎 View Query</strong></summary><br>
+
+```sql
+
+SELECT 
+	COUNT(*) AS records,
+	COUNT(DISTINCT invoice_no) AS invoices,
+	COUNT(DISTINCT stock_code) AS unique_stock_items,
+	SUM(quantity) AS total_items_sold,
+	ROUND(SUM(unit_price * quantity),2) AS total_sales,
+	COUNT(DISTINCT customer_id) AS customers,
+	COUNT(DISTINCT country) AS countries
+FROM sales_clean
+WHERE date_part('month', invoice_date) != 12
+	AND date_part('year', invoice_date) != 2010
+
+```
+</details>
+
+**Results:**
+
+| records | invoices | unique_stock_items | total_items_sold | total_sales | customers | countries |
+|---------|----------|--------------------|------------------|-------------|-----------|-----------|
+| 353039  | 16232    | 3581               | 4559048          | 6369539.52  | 4168      | 36        |
+
+
+<br>
+
+
+
 ---
 <br>
 
