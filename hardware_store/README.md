@@ -1,12 +1,13 @@
 # Computer Hardware Store Inventory Analysis
 ### Overview
-After a company wide inventory count, a computer hardware company is left with a single `.csv` file that includes product details such as part numbers, descriptions, location, and quantity.  The products are distributed among its multiple international warehouses.
+After a company wide inventory count, a computer hardware company is left with a single file that includes product details such as part numbers, descriptions, location, and quantity.  The products are distributed among its multiple international warehouses.
+
+The company stakeholders request a summary of the inventory dataset that includes the devlierables below for the company overall and warehouses.
 
 <br>
 
-The company stakeholders request a summary of the inventory dataset that includes the following figures for the company as a whole and as applied to each individual warehouse:
-
-* Total product ***count*** and ***value*** overall and separated by product category.
+### Deliverables
+* Total product ***count*** and ***value*** overall and grouped by product category.
 * ***Highest priced*** products.
 * Products with the ***highest gross values***.
 * ***Most profitable***  products.
