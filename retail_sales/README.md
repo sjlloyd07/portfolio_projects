@@ -2,7 +2,8 @@
 
 ### Overview
 
-The owners of a retail store request answers to the following questions they have about the sales data from their store. The sales data contains transaction records that include invoice details by line item and customer location.
+The stakeholders of a retail store request the following information about their store's sales data.  
+The raw sales data consists of timestamped invoices that contain customer and product details.
 
 ### Deliverables
 * Total sales.
@@ -10,10 +11,8 @@ The owners of a retail store request answers to the following questions they hav
 * Sales distribution by country.
 * Top selling items.
 * Top performing customer.
-
-Number of orders.
-Number of orders per customer.
-Average sales total per order.
+* Number of customers and orders.
+* Average sales total per order.
 
 
 <br>
@@ -30,7 +29,7 @@ Average sales total per order.
 * ### [Data](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Data)
 * ### [Cleaning and Prep](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Cleaning--Prep)
 * ### [Dashboard](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#Dashboard)
-* ### [Deliverables](https://github.com/sjlloyd07/portfolio_projects/tree/main/retail_sales#deliverables)
+
 
 ----
 
@@ -44,7 +43,7 @@ It was downloaded to local storage in `.xlsx` format, inspected and exported int
 
 ----
 
-# Cleaning / Prep
+# [Cleaning / Prep](/retail_sales/cleaning-prep.md)
 The PostgreSQL GUI PgAdmin4 was utilized to perform data inspection and cleaning tasks to prepare the data for analysis and visualization in Tableau.
 
 **Summary of the prepared dataset:**
@@ -62,29 +61,7 @@ The PostgreSQL GUI PgAdmin4 was utilized to perform data inspection and cleaning
 <div class='tableauPlaceholder' id='viz1702568107933' style='position: relative'>
   <noscript>
     <a href='https://public.tableau.com/views/retail_sales_report_17022538787610/Dashboard?:language=en-US&:display_count=n&:origin=viz_share_link'>
-      <img alt='Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;re&#47;retail_sales_report_17022538787610&#47;Dashboard&#47;1_rss.png' style='border: none' />
+      <img alt='Dashboard (2) ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;re&#47;retail_sales_report_17022538787610&#47;Dashboard2&#47;1_rss.png' style='border: none' />
     </a>
 
-
 <br>
-
-----
-
-# Deliverables
-* How much in total sales did they do?
-  * **$ 6369539.52**
-    
-* How many items sold total?
-   * **4559048**
-
-* What times of year had the highest sales?
-   * **The fourth quarter.**
-
-* What country had the highest sales?
-   * **United Kingdom**
-
-* What item sold the most?
-   * **Papercraft, Little Birdie**
-
-* Who was their best customer?
-   * **Customer 14646, Netherlands.**
