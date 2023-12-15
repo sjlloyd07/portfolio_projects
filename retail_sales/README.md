@@ -5,12 +5,16 @@
 The owners of a retail store request answers to the following questions they have about the sales data from their store. The sales data contains transaction records that include invoice details by line item and customer location.
 
 ### Deliverables
-* How much in total sales did they do?
-* How many items sold total?
-* What times of year had the highest sales?
-* What country had the highest sales?
-* What item sold the most?
-* Who was their best customer?
+* Total sales.
+* Sales distribution over the year.
+* Sales distribution by country.
+* Top selling items.
+* Top performing customer.
+
+Number of orders.
+Number of orders per customer.
+Average sales total per order.
+
 
 <br>
 
