@@ -6,3 +6,6 @@
 # ignore all files in .gitignore sub-folders
 
 **/.gitignore/
+
+# ignore
+google_capstone
