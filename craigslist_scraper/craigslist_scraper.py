@@ -113,7 +113,7 @@ filepath = save_folder + '\\' + now
 
 # write list items to csv file
 with open(filepath, 'w',newline='',encoding='utf-8') as csvObj:
-    csvWriter = csv.writer(csvObj)
+    csvWriter = csv.DictWriterwriter(csvObj)
     csvWriter.writerow(['listing'])
     for item in listings:
         csvWriter.writerow([item])
