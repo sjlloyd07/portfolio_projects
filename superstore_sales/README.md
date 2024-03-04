@@ -31,6 +31,12 @@ In 2015, the business stakeholders at an office supply super store want to know 
 # Data 
 The data was taken from this [kaggle dataset](https://www.kaggle.com/datasets/ishanshrivastava28/superstore-sales) that consists of mock superstore sales transaction records taken from 2011 to 2014.
 
+Each record contains the values below:
+
+|Row ID|Order ID|Order Date|Ship Date|Ship Mode|Customer ID|Customer Name|Segment|Country|City|State|Postal Code|Region|Product ID|Category|Sub-Category|Product Name|Sales|Quantity|Discount|Profit|
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+
+
 The data was confirmed to be complete and consistent during [cleaning and preparation](/superstore_sales/cleaning.md).
 
 <br><br>
