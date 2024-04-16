@@ -118,7 +118,7 @@ An entity relationship diagram (ERD) was constructed to represent the table rela
 
 <br>
 
-![computer_hardware_ERD](/hardware_store/images/computerHardware_erd.png)
+![computer_hardware_ERD](./images/computerHardware_erd.png)
 
 <br>
 
