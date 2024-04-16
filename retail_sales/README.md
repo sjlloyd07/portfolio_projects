@@ -47,7 +47,7 @@ The dataset contains 8 columns:
 ----
 
 # Cleaning / Prep
-The PostgreSQL GUI PgAdmin4 was utilized to perform data inspection and cleaning tasks detailed [here](/retail_sales/cleaning-prep.md) to prepare the data for analysis and visualization in Tableau.
+The PostgreSQL GUI PgAdmin4 was utilized to perform data inspection and cleaning tasks detailed [here](./cleaning-prep2.md) to prepare the data for analysis and visualization in Tableau.
 
 **Summary of the prepared dataset:**
 
