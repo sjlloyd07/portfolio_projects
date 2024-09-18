@@ -175,5 +175,5 @@ LIMIT 5
 ---------------------------
 
 -- Export results table with psql
-\copy humanresources.hourly_emp_details TO 'C:\Users\steve\Desktop\adventureworks-master\adventureworks\hourly_employees.csv' CSV;
+-- \copy humanresources.hourly_emp_details TO 'C:\Users\steve\tech_portfolio\portfolio_projects\adventureworks\hourly_employees.csv' CSV HEADER;
 
