@@ -15,6 +15,9 @@ Parameters to adjust values used in visualizations.
 
 
 ## Minimum Wage Impact Bar Charts
+- Dual bar charts that show the dollar impact and the headcount of employees affected by an increased minimum wage broken down by department.
+
+
 
 ~~~sql 
 
@@ -75,6 +78,7 @@ END
 
 (([!Hourly Cost: Wage After Increase]-[!Hourly Cost: Wage Before Increase])*40)*52
 
+~~~
 
 Columns:
 -> AGG(!Yearly Additional Cost After Increase)
@@ -84,9 +88,15 @@ Rows:
 -> Department
 
 Filters:
--> Wage
+-> Wage-MoS Combo Set
 
-~~~
+
+Marks:
+-> AGG([!Yearly Additional Cost After Increase])
+-> COUNT([Emp Id])
+
+
+
 ---
 
 
@@ -99,7 +109,7 @@ Marks:
 
 
 
-## Employees Below Minimum Wage
+## Employees Below Minimum Wage Text
 - Total number of employees currently earning below selected minimum wage and within the months of service limitation.
 
 Filters:
@@ -125,6 +135,7 @@ Marks:
 
 
 ## Hourly Wage Histogram (Before)
+- "Current Distribution"
 - Number of employees in each wage bin. 
 - Colored by currently earning above/below selected minimum wage and within the months of service limitation.
 - Normal distribution curve
@@ -171,3 +182,75 @@ Marks:
 
 
 
+
+## Hourly Wage Histogram (After)
+- "Distribution with Minimum Wage"
+- Number of employees in each wage bin. 
+- Colored by currently earning above/below selected minimum wage and within the months of service limitation.
+- Normal distribution curve w/ Params
+
+~~~sql
+### Wage w/ Params Bin
+INT([Wage w/ Params])
+
+
+
+### !Avg Hourly Wage w/ Params
+// Average hourly wage w/ params applied
+TOTAL(AVG([Wage w/ Params]))
+
+
+
+### !Std Dev Hourly Wage w/ Params
+// Standard deviation of all hourly wage data w/ params applied
+TOTAL(STDEV([Wage w/ Params]))
+
+
+
+### Normal Distribution Curve w/ Params
+//  formula for the normal distribution probability density function
+// (1 / ([St Dev of Measure Values] * SQRT(2*PI()))) * EXP(-((ATTR([Measure Bin]) - [Mean Measure Value])^2 / (2*[St Dev of Measure Values]^2)))
+
+
+(1 / ([!Std Dev Hourly Wage w/ Params] * SQRT(2*PI()))) 
+* EXP(
+-((ATTR([Wage w/ Params Bin]) - [!Avg Hourly Wage w/ Params])^2 / (2*[!Std Dev Hourly Wage w/ Params]^2))
+) 
+
+~~~
+
+Columns: 
+-> Wage w/ Params Bins (continuous)
+
+Rows (dual axis):
+-> CNT(Emp ID)
+-> Normal Distribution Curve w/ Params 
+
+Marks:
+-> Wage-MoS Combo Set 
+
+
+
+## Affected Employees Scatter Plot
+- Highlighted employees affected by a wage increase or months of service limit.
+
+Columns: 
+-> Months of Service
+
+Rows:
+-> Hourly Wage
+
+Marks:
+-> Wage-MoS Combo Set 
+
+
+
+## Average Hourly Wage (Before)
+Marks:
+-> AVG([Hourly Wage])
+
+
+
+## Average Hourly Wage (After)
+Marks:
+-> AVG([!Wage with Params])
